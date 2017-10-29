@@ -47,6 +47,14 @@ namespace mboard.mvc.Tests
 
     }
 
+    [TestMethod]
+    public void createusertest()
+    {
+      User newUser = new User { Id = 1, Name = "wlodek" };
+      newUser.CreateUser();
+    }
+
+
 
 
     [TestMethod]
