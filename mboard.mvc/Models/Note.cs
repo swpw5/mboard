@@ -5,18 +5,17 @@ using System.Web;
 
 namespace mboard.mvc.Models
 {
-  public class Board : ICrud<Board>
-  {
+    public class Note : ICrud<Note>
+    {
         public string Id { get; set; }
-        public string Title { get; private set; }
+        public int IdPin { get; private set; }
         public string Color { get; set; }
         public int Height { get; set; }
-        public int Width { get; set; }
         public DateTime Last_mod { get; set; }
         public DateTime Created { get; set; }
-        public int List_position { get; set; }
+        public string Text { get; set; }
 
-        public string Create(Board obj)
+        public string Create(Note obj)
         {
             throw new NotImplementedException();
         }
@@ -26,12 +25,12 @@ namespace mboard.mvc.Models
             throw new NotImplementedException();
         }
 
-        public Board Read(int Id)
+        public Note Read(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(Board obj)
+        public void Update(Note obj)
         {
             throw new NotImplementedException();
         }
