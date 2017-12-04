@@ -29,6 +29,15 @@ namespace mboard.Tests.Models
             board = crud.Read<Board>(guid);
             Debug.WriteLine(board.Title);
         }
+        /*[TestMethod]
+        public void UpdateAll()
+        {
+            Board board = new Board() {Title = "Nazwa123", Color = "Red", Height = 111, Width = 222, Created = DateTime.Now, Last_mod = DateTime.Now, List_position = 2 }; ;
+            Crud crud = new Crud();
+            crud.UpdateAll(guid ,board);
+            Debug.WriteLine(board.Title);
+        }
+
         [TestMethod]
         public void Delete()
         {
@@ -42,6 +51,6 @@ namespace mboard.Tests.Models
             Crud crud = new Crud();
             board = crud.Read<Board>(guid);
             Debug.WriteLine(board.Title);
-        }
+        }*/
     }
 }

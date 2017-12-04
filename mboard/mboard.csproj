@@ -210,6 +210,8 @@
     <Compile Include="Controllers\Crud.cs" />
     <Compile Include="Controllers\ICrud.cs" />
     <Compile Include="Models\DBContext.cs" />
+    <Compile Include="Models\IRelationship.cs" />
+    <Compile Include="Models\Relationship.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Photo.cs" />
