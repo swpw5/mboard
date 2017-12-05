@@ -5,10 +5,10 @@ using System.Web;
 
 namespace mboard.Models
 {
-    public class Board
+    public class Board : INodeModel
     {
 
-            public int Id { get; set; }
+            public string Id { get; set; } = Guid.NewGuid().ToString();
             public string Title { get; set; }
             public string Color { get; set; }
             public int Height { get; set; }

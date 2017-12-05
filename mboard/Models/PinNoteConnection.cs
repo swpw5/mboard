@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace mboard.Controllers
+namespace mboard.Models
 {
-    public interface ICrud
+    public class PinNoteConnection
     {
-        int Id { get; set; }
     }
 }

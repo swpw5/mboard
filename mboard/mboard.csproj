@@ -207,16 +207,14 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Board.cs" />
-    <Compile Include="Controllers\Crud.cs" />
-    <Compile Include="Controllers\ICrud.cs" />
+    <Compile Include="DBContext\Crud.cs" />
+    <Compile Include="Models\BoardModelView.cs" />
     <Compile Include="Models\DBContext.cs" />
-    <Compile Include="Models\IRelationship.cs" />
-    <Compile Include="Models\Relationship.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Note.cs" />
-    <Compile Include="Models\Photo.cs" />
     <Compile Include="Models\Pin.cs" />
-    <Compile Include="Models\PinRelationship.cs" />
+    <Compile Include="Models\PinConnectionModelView.cs" />
+    <Compile Include="Models\PinNoteConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
