@@ -428,3 +428,8 @@ C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\obj\Debug\mboard.csproj.App.con
 C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\obj\Debug\mboard.csproj.CoreCompileInputs.cache
 C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\obj\Debug\mboard.dll
 C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\obj\Debug\mboard.pdb
+C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\obj\Debug\mboard.csprojResolveAssemblyReference.cache
+C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\bin\EntityFramework.dll
+C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\bin\EntityFramework.SqlServer.dll
+C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\bin\EntityFramework.xml
+C:\Users\Asztar\Desktop\mboard (2)\mboard\mboard\bin\EntityFramework.SqlServer.xml

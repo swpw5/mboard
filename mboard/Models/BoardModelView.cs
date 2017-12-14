@@ -9,6 +9,6 @@ namespace mboard.Models
     {
         public Board Board { get; set; }
         public List<RelationWithNodes<Pin,Note,PinNoteConnection>> PinNote { get; set; }
-        public List<PinModelView> PinToPin  { get; set; }
+        public List<PinConnectionModelView> PinToPin  { get; set; }
     }
 }
