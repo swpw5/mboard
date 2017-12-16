@@ -69,7 +69,8 @@ namespace mboard
         private void ConfigureNeo4j(IAppBuilder app)
         {
             app.CreatePerOwinContext(() => {
-                var gc = new GraphClient(new Uri("http://localhost.:7474/db/data"));
+                var gc = NeoDbContext.GC;// new GraphClient(new Uri("http://localhost.:7474/db/data"));
+
                 gc.Connect();
                 var gcw = new GraphClientWrapper(gc);
                 return gcw;

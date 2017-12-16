@@ -5,16 +5,47 @@ using System.Web;
 using System.Net;
 using System.Web.Mvc;
 using mboard.Models;
+using System.Web.Security;
+using Microsoft.AspNet.Identity;
 
 namespace mboard.Controllers
 {
     public class TestController : Controller
     {
         private NeoDbContext db = new NeoDbContext();
+        
         // GET: Test
         public ActionResult Index()
         {
-            return View(db.ReadNodeType<Board>());
+
+            // Guid g = (Guid)Membership.GetUser(User.Identity.Name).ProviderUserKey;
+            ViewBag.Message = User.Identity.GetUserId();
+            string userId = User.Identity.GetUserId();
+            NeoDbContext ctx = new NeoDbContext();
+
+            List<Board> boards = null;
+            //string userId = "cdf72cae-adb0-4188-9b1c-69692eb56707";
+            try
+            {
+                boards = ctx.ReadRelatedNodes<UserBoardRelation, Board>(userId).ToList<Board>();
+
+            }
+            catch (Exception)
+            {
+
+                // throw;
+            }
+            if (boards == null)
+            {
+                return HttpNotFound();
+            }
+            else
+            {
+                return View(boards);
+            }
+            
+            //return View(db.ReadNodeType<Board>());
+           
         }
 
         // GET: Test/Details/5
@@ -40,13 +71,26 @@ namespace mboard.Controllers
 
         // POST: Test/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Title,Color,Height,Width,Last_mod,Created,List_position")] Board board)
+        public ActionResult Create([Bind(Include = "Title")] Board board)
         {
             if (ModelState.IsValid)
             {
-                db.CreateNode(board);
+                //string userId = "cdf72cae-adb0-4188-9b1c-69692eb56707";
+                //string userId = "6049202b-bd31-47b4-94ab-3fde19200e6c";
+                //Board b = new Board();
+                //b.Title = board.Title;
+                //Debug.WriteLine(b.name);
+                string userId = User.Identity.GetUserId();
+                UserBoardRelation rel = new UserBoardRelation();
+                rel.Description = "testwidok";
+
+                NeoDbContext ctx = new NeoDbContext();
+                // ctx.CreateNode(user);
+                ctx.CreateNodeWithRelation(board, userId, rel);
+
+                //db.CreateNode(board);
                 return RedirectToAction("Index");
-            }        
+            }
             return View();
         }
 
@@ -68,7 +112,7 @@ namespace mboard.Controllers
         // POST: Test/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Title,Color,Height,Width,Last_mod,Created,List_position")] Board board)
+        public ActionResult Edit(Board board)
         {
             if (ModelState.IsValid)
             {
@@ -80,18 +124,18 @@ namespace mboard.Controllers
 
         // GET: Test/Delete/5
         public ActionResult Delete(string id)
-    {
-        if (id == null)
         {
-            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Board board = db.ReadNode<Board>(id);
+            if (board == null)
+            {
+                return HttpNotFound();
+            }
+            return View(board);
         }
-        Board board = db.ReadNode<Board>(id);
-        if (board == null)
-        {
-            return HttpNotFound();
-        }
-        return View(board);
-    }
 
         // POST: Test/Delete/5
         [HttpPost, ActionName("Delete")]

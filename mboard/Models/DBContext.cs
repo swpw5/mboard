@@ -11,7 +11,12 @@ namespace mboard.Models
 {
     public class NeoDbContext
     {
-        private static GraphClient gc = new GraphClient(new Uri("http://localhost:7474/db/data"));
+        //private static GraphClient gc = new GraphClient(new Uri("http://localhost:7474/db/data"));
+
+        private static GraphClient gc = new GraphClient(new Uri("http://localhost:7474/db/data"), username: "neo4j", password: "alpha");
+
+        public static GraphClient GC { get { return gc; } }
+
         public static NeoDbContext Create()
         {
             return new NeoDbContext();
@@ -35,8 +40,9 @@ namespace mboard.Models
             gc.Cypher
                 .Match("(node)")
                 .Where((INodeModel node) => node.Id == RelNode)
-                .CreateUnique("(node)<-[:" + labelRel + "]-(createdNode:" + label + " {data})")
+                .CreateUnique("(node)<-[:" + labelRel + " {param}" + "]-(createdNode:" + label + " {data})")
                 .WithParam("data", model)
+                .WithParam("param", Rel)
                 .ExecuteWithoutResults();
         }
         public void CreateNodeWithRelation(INodeModel model, string RelNodeId, string Rel)

@@ -8,6 +8,9 @@ namespace mboard.Models
         [Required]
         [Display(Name = "Adres e-mail")]
         public string Email { get; set; }
+
+
+        //
     }
 
     public class ExternalLoginListViewModel
@@ -68,6 +71,7 @@ namespace mboard.Models
         [EmailAddress]
         [Display(Name = "Adres e-mail")]
         public string Email { get; set; }
+        //private string name { get { return Email; } }
 
         [Required]
         [StringLength(100, ErrorMessage = "{0} musi zawierać co najmniej następującą liczbę znaków: {2}.", MinimumLength = 6)]
