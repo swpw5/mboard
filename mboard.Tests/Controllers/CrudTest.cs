@@ -230,5 +230,12 @@ namespace mboard.Tests.Models
             db.DeleteNode(guid7);
             Board boardTest = db.ReadNode<Board>(guid6);
         }
+
+        [TestMethod]
+        public void CreateBoardForUserTest()
+        {
+            NeoDbContext ctx = new NeoDbContext;
+            ctx.CreateNode(new Board())
+        }
     }
 }

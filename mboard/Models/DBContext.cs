@@ -11,7 +11,11 @@ namespace mboard.Models
 {
     public class NeoDbContext
     {
-        private static GraphClient gc = new GraphClient(new Uri("http://localhost:7474/db/data"));
+        //private static GraphClient gc = new GraphClient(new Uri("http://localhost:7474/db/data"));
+        private static GraphClient gc = new GraphClient(new Uri("http://localhost:7474/db/data"), username: "neo4j", password: "alpha");
+
+        public static GraphClient GC { get { return gc; } }
+
         public static NeoDbContext Create()
         {
             return new NeoDbContext();
