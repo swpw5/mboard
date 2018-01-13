@@ -7,13 +7,16 @@ using System.Web.Mvc;
 using mboard.Models;
 using System.Web.Security;
 using Microsoft.AspNet.Identity;
+using System.Web.Helpers;
+using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace mboard.Controllers
 {
     public class TestController : Controller
     {
         private NeoDbContext db = new NeoDbContext();
-        
+
         // GET: Test
         public ActionResult Index()
         {
@@ -43,9 +46,9 @@ namespace mboard.Controllers
             {
                 return View(boards);
             }
-            
+
             //return View(db.ReadNodeType<Board>());
-           
+
         }
 
         // GET: Test/Details/5
@@ -87,12 +90,14 @@ namespace mboard.Controllers
                 NeoDbContext ctx = new NeoDbContext();
                 // ctx.CreateNode(user);
                 ctx.CreateNodeWithRelation(board, userId, rel);
-
+                //board.DiagramData =
                 //db.CreateNode(board);
                 return RedirectToAction("Index");
             }
             return View();
         }
+
+
 
         // GET: Test/Edit/5
         public ActionResult Edit(string id)
@@ -117,6 +122,15 @@ namespace mboard.Controllers
             if (ModelState.IsValid)
             {
                 db.UpdateAllPropNode<Board>(board.Id, board);
+                //var d = board.DiagramData;
+                if (board.DiagramData != null)
+                {
+                    string replacement = Regex.Replace(board.DiagramData, @"\t|\n|\r", "");
+                    string diag = replacement.Replace("'", "\"");
+
+                    db.UpdateSinglePropNode(board.Id, diag, "DiagramData");
+
+                }
                 return RedirectToAction("Index");
             }
             return View(board);

@@ -4,13 +4,13 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Board</h4>
         <hr />
@@ -25,66 +25,318 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Color, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Color, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Color, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        <div id="myDiagramDiv" style="background-color:#f2f2f2; height: 500px"></div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Height, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Height, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Height, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Width, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Width, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Width, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Last_mod, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Last_mod, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Last_mod, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Created, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Created, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Created, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.List_position, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.List_position, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.List_position, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-}
+
+
+        <div id="diagram-buttons">
+ 
+                    <input type="submit" value="Save" id="SaveButton" class="btn btn-success"/>
+                    
+
+                    @Html.EditorFor(model => model.DiagramData, new { htmlAttributes = new { @class = "form-control", @name = "mySavedModel2"} })
+
+                    <textarea id="mySavedModel" name="mySavedModel" class="form-control">
+
+
+                        @if (Model.DiagramData != null)
+                        {
+
+                            @Html.Value(Model.DiagramData);
+
+                        }
+                        else
+                        {
+
+                            //{
+                            //"nodeDataArray": [
+                            //{ "id": 0, "loc": "120 120", "text": "Initial", "comments": "test comment"},
+                            //{ "id": 1, "loc": "330 120", "text": "First down" },
+                            //{ "id": 2, "loc": "226 376", "text": "First up" },
+                            //{ "id": 3, "loc": "60 276", "text": "Second down" },
+                            //{ "id": 4, "loc": "226 226", "text": "Wait" }
+                            //],
+                            //"linkDataArray": [
+                            //{ "from": 0, "to": 0, "text": "up or timer", "curviness": -20 },
+                            //{ "from": 0, "to": 1, "text": "down", "curviness": 20 },
+                            //{ "from": 1, "to": 0, "text": "up (moved)\nPOST", "curviness": 20 },
+                            //{ "from": 1, "to": 1, "text": "down", "curviness": -20 },
+                            //{ "from": 1, "to": 2, "text": "up (no move)" },
+                            //{ "from": 1, "to": 4, "text": "timer" },
+                            //{ "from": 2, "to": 0, "text": "timer\nPOST" },
+                            //{ "from": 2, "to": 3, "text": "down" },
+                            //{ "from": 3, "to": 0, "text": "up\nPOST\n(dblclick\nif no move)" },
+                            //{ "from": 3, "to": 3, "text": "down or timer", "curviness": 20 },
+                            //{ "from": 4, "to": 0, "text": "up\nPOST" },
+                            //{ "from": 4, "to": 4, "text": "down" }
+                            //]
+
+
+                            //}
+                            Html.Value("kliknij dwukrotnie aby dodac element..");
+
+
+                        }
+
+
+
+
+
+                        @*{
+                        'nodeDataArray': [
+                        { 'id': 0, 'loc': '120 120', 'text': 'Initial', 'comments': 'test comment'},
+                        { 'id': 1, 'loc': '330 120', 'text': 'First down' },
+                        { 'id': 2, 'loc': '226 376', 'text': 'First up' },
+                        { 'id': 3, 'loc': '60 276', 'text': 'Second down' },
+                        { 'id': 4, 'loc': '226 226', 'text': 'Wait' }
+                        ],
+                        'linkDataArray': [
+                        { 'from': 0, 'to': 0, 'text': 'up or timer', 'curviness': -20 },
+                        { 'from': 0, 'to': 1, 'text': 'down', 'curviness': 20 },
+                        { 'from': 1, 'to': 0, 'text': 'up (moved)\nPOST', 'curviness': 20 },
+                        { 'from': 1, 'to': 1, 'text': 'down', 'curviness': -20 },
+                        { 'from': 1, 'to': 2, 'text': 'up (no move)' },
+                        { 'from': 1, 'to': 4, 'text': 'timer' },
+                        { 'from': 2, 'to': 0, 'text': 'timer\nPOST' },
+                        { 'from': 2, 'to': 3, 'text': 'down' },
+                        { 'from': 3, 'to': 0, 'text': 'up\nPOST\n(dblclick\nif no move)' },
+                        { 'from': 3, 'to': 3, 'text': 'down or timer', 'curviness': 20 },
+                        { 'from': 4, 'to': 0, 'text': 'up\nPOST' },
+                        { 'from': 4, 'to': 4, 'text': 'down' }
+                        ]
+
+
+                        }*@
+
+
+                    </textarea>
+
+        </div> <!--end of diagram buttons-->
+   
+} 
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @*@Scripts.Render("~/bundles/gojs")*@
+
 }
+
+<script src="~/Scripts/go-debug.js"></script>
+
+<script>
+
+    function init() {
+
+        console.log('hello edit');
+        var $ = go.GraphObject.make;
+        myDiagram = $(go.Diagram, "myDiagramDiv",
+            {
+                initialContentAlignment: go.Spot.Center,
+                "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
+                "clickCreatingTool.archetypeNodeData": { text: "new node" },
+                "undoManager.isEnabled": true
+            }
+        );
+
+        myDiagram.addDiagramListener("Modified", function (e) {
+            var btn = document.getElementById("SaveButton");
+            if (btn) btn.disabled = !myDiagram.isModified;
+            var idx = document.title.indexOf("*");
+            if (myDiagram.isModified) {
+                if (idx < 0) document.title += "*";
+            } else {
+                if (idx >= 0) document.title = document.title.substr(0, idx);
+            }
+        });
+
+        //define node template
+        myDiagram.nodeTemplate =
+            $(go.Node, "Auto",
+
+                {
+                    mouseLeave: function (e, node) {
+
+                        //console.log('mousedrop');
+                        //console.log(node);
+                        saveDiagramState();
+                    }
+                
+                
+                },
+                new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+               
+                $(go.Shape, "RoundedRectangle",
+                {
+                    name: "shape",
+                    parameter1: 5,//corner radius
+                    fill: $(go.Brush, "Linear", { 0: "rgb(222, 222, 255)", 1: "rgb(233, 233, 200)" }),
+                    stroke: null,
+                    portId: "", //node port not a whole node
+                    fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
+                    toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true,
+                    cursor: "pointer"
+
+                }),
+                $(go.Panel, "Horizontal", 
+                    $(go.Picture, 
+                        {
+                            name: "Picture", 
+                            desiredSize: new go.Size(39, 50),
+                            margin: new go.Margin(6, 8, 6, 10),
+                        },
+                        new go.Binding("source")
+                    ),
+                    $(go.Panel, "Table",
+                        {
+                            maxSize: new go.Size(150, 999),
+                            margin: new go.Margin(6, 10, 0, 3),
+                            defaultAlignment: go.Spot.Left
+                        },
+                        $(go.RowColumnDefinition, { column: 2, width: 4 }),
+                        $(go.TextBlock, 
+                            {
+                                row: 0, column: 0, columnSpan: 5,
+                                font: "bold 12pt Segoe UI,sans-serif",
+                                editable: true, isMultiline: false,
+                                minSize: new go.Size(10, 16)
+                            },
+                            new go.Binding("text").makeTwoWay()
+                        ),
+                        $(go.TextBlock,
+                            {
+                                row: 1, column: 0, columnSpan: 5,
+                                font: "italic 9pt sans-serif",
+                                wrap: go.TextBlock.WrapFit,
+                                editable: true,  // by default newlines are allowed
+                                minSize: new go.Size(10, 14)
+                            },
+                            new go.Binding("text", "comments").makeTwoWay())
+                    )
+            
+                )
+
+              );
+
+
+        myDiagram.nodeTemplate.selectionAdornmentTemplate =
+            $(go.Adornment, "Spot",
+                $(go.Panel, "Auto",
+
+                        $(go.Shape, { fill: null, stroke: "gold", strokeWidth: 2 }),
+                        $(go.Placeholder)
+
+
+                ),
+                $("Button",
+                    {
+                        alignment: go.Spot.TopRight,
+                        click: addNodeAndLink //defined below
+
+                    },
+                    $(go.Shape, "PlusLine", { width: 6, height: 5 })
+                ) //end button
+            ); //end adornment
+
+        //create new node with link
+        function addNodeAndLink(e, obj) {
+            var adornment = obj.part;
+            var diagram = e.diagram;
+            diagram.startTransaction("Add State");
+
+
+            //get cliked node data
+            var fromNode = adornment.adornedPart;
+            var fromData = fromNode.data;
+
+            //create new node to the right
+            var toData = { text: "add title", comments: "add comment" };
+            var p = fromNode.location.copy();
+            p.x += 200;
+            p.y += 50;
+            toData.loc = go.Point.stringify(p); //loc property is a string not a point object
+            var model = diagram.model;
+            model.addNodeData(toData);
+
+            var linkdata = {
+                from: model.getKeyForNodeData(fromData),
+                to: model.getKeyForNodeData(toData),
+                text: "transition"
+            };
+
+            //add link data to model
+            model.addLinkData(linkdata);
+
+            //select new node
+            var newNode = diagram.findNodeForData(toData);
+            diagram.select(newNode);
+            
+            diagram.commitTransaction("Add State");
+            diagram.scrollToRect(newNode.actualBounds);
+
+        }
+
+
+        myDiagram.linkTemplate =
+            $(go.Link, //link panel
+                {
+                    curve: go.Link.Bezier, adjusting: go.Link.Stretch,
+                    reshapable: true,
+                    relinkableFrom: true, relinkableTo: true,
+                    toShortLength: 3
+
+                },
+                new go.Binding("points").makeTwoWay(),
+                new go.Binding("curviness"),
+                $(go.Shape, //link shape
+                    {
+                        strokeWidth: 1.5
+                    }
+                ),
+                $(go.Shape, //link shape
+                    {toArrow: "standard", stroke: null}),
+                $(go.Panel, "Auto", 
+                    $(go.Shape, //label background
+                        {
+                            fill: $(go.Brush, "Radial", { 0: "rgb(255, 240, 240)", 0.3: "rgb(255, 240, 240)", 1: "rgba(255, 240, 240, 0)" }), stroke: null
+                        }),
+                    $(go.TextBlock, "transition", //label text
+                        {
+                            textAlign: "center",
+                            font: "11pt helvetica, arial, sans-serif",
+                            margin: 4,
+                            editable: true  // enable in-place editing
+                        },
+
+                        new go.Binding("text").makeTwoWay())
+                    )
+
+
+                );
+
+
+        load();
+
+    }
+
+    function saveDiagramState() {
+        //preventDefault();
+        document.getElementById("mySavedModel").value = myDiagram.model.toJson();
+        document.getElementById("DiagramData").value = myDiagram.model.toJson();
+        console.log(myDiagram.model.toJson);
+
+        
+    }
+    function load() {
+        myDiagram.model = go.Model.fromJson(document.getElementById("DiagramData").value);
+    }
+
+
+    init();
+
+</script>

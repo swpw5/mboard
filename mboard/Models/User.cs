@@ -9,6 +9,6 @@ namespace mboard.Models
     public class User : ApplicationUser
     {
 
-        public string name { get { return base.Email; } }
+        public string name { get { return base.Email; } } //prop pisane mala litera aby email widoczny byl wewnatrz wezla 
     }
 }

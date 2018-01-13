@@ -9,8 +9,7 @@ using mboard.Controllers;
 using System.Threading.Tasks;
 
 using Microsoft.AspNet.Identity;
-
-
+using System.Text.RegularExpressions;
 
 namespace mboard.Tests.Models
 {
@@ -92,6 +91,64 @@ namespace mboard.Tests.Models
             Board board = db.ReadNode<Board>(id);
 
             Debug.WriteLine(board.Title);
+        }
+
+
+        [TestMethod]
+        public void SaveDiagram()
+        {
+         
+            string diagData = @"{
+                        'nodeDataArray': [
+                        { 'id': 0, 'loc': '120 120', 'text': 'Initial', 'comments': 'test comment'},
+                        { 'id': 1, 'loc': '330 120', 'text': 'First down' },
+                        { 'id': 2, 'loc': '226 376', 'text': 'First up' },
+                        { 'id': 3, 'loc': '60 276', 'text': 'Second down' },
+                        { 'id': 4, 'loc': '226 226', 'text': 'Wait' }
+                        ],
+                        'linkDataArray': [
+                        { 'from': 0, 'to': 0, 'text': 'up or timer', 'curviness': -20 },
+                        { 'from': 0, 'to': 1, 'text': 'down', 'curviness': 20 },
+                        { 'from': 1, 'to': 0, 'text': 'up (moved)\nPOST', 'curviness': 20 },
+                        { 'from': 1, 'to': 1, 'text': 'down', 'curviness': -20 },
+                        { 'from': 1, 'to': 2, 'text': 'up (no move)' },
+                        { 'from': 1, 'to': 4, 'text': 'timer' },
+                        { 'from': 2, 'to': 0, 'text': 'timer\nPOST' },
+                        { 'from': 2, 'to': 3, 'text': 'down' },
+                        { 'from': 3, 'to': 0, 'text': 'up\nPOST\n(dblclick\nif no move)' },
+                        { 'from': 3, 'to': 3, 'text': 'down or timer', 'curviness': 20 },
+                        { 'from': 4, 'to': 0, 'text': 'up\nPOST' },
+                        { 'from': 4, 'to': 4, 'text': 'down' }
+                        ]
+
+
+                        }";
+
+            
+
+
+            
+            string replacement = Regex.Replace(diagData, @"\t|\n|\r", "");
+            replacement = replacement.Replace("'", "\"");
+            Debug.Write(replacement);
+            
+
+            //string diagData = "jakis json";
+            NeoDbContext db = new NeoDbContext();
+            string boardId = "8efa2bfd-539a-469b-af63-f759ffb4a3e3";
+            //Board board = db.ReadNode<Board>(boardId);
+            db.UpdateSinglePropNode(boardId, replacement, "DiagramData");
+
+
+        }
+
+        [TestMethod]
+        public void ReadDiagramDataTest()
+        {
+            NeoDbContext db = new NeoDbContext();
+            string boardId = "c81fcc0a-8f98-4af3-935d-8e0f83a31e73";
+            Board board = db.ReadNode<Board>(boardId);
+            Debug.WriteLine(board.DiagramData);
         }
 
 

@@ -33,5 +33,11 @@ textarea {
 .board-thumb {
     width: 100px;
     height: 200px;
-    
 }
+
+#diagram-buttons {
+    /*margin-left: 1px;*/
+    position: relative;
+}
+
+
