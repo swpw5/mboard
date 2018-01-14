@@ -18,8 +18,7 @@ namespace mboard.Models
             //public int Height { get; set; }
             //public int Width { get; set; }
             public  string name { get { return Title; } }
-
-
+            public bool VisibleForFriends { get; set; } = true;
             public string DiagramData { get; set; }
                                            //public DateTime Last_mod { get; set; }
                                            //public DateTime Created { get; set; }

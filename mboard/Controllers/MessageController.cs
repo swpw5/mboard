@@ -32,8 +32,9 @@ namespace mboard.Controllers
 
         public ActionResult SendMessage(User user)
         {
-
-            return View(user);
+            ViewBag.Id = user.Id;
+            ViewBag.Email = user.Email;
+            return View();
         }
 
         [HttpPost]

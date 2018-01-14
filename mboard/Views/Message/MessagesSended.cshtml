@@ -1,4 +1,5 @@
-﻿@model IEnumerable<mboard.Models.Message>
+﻿@using mboard.Models;
+@model IEnumerable<RelationWithNode<Message, MessageRelations>>
 
 @{
     ViewBag.Title = "View";
@@ -7,50 +8,50 @@
 <h2>View</h2>
 
 <p>
-    @Html.ActionLink("Create New", "SendMessage")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Created)
+            @Html.DisplayNameFor(model => model.NodeData.Created)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Title)
+            @Html.DisplayNameFor(model => model.NodeData.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Content)
+            @Html.DisplayNameFor(model => model.NodeData.Content)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserTo)
+            @Html.DisplayNameFor(model => model.NodeData.UserTo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UserFrom)
+            @Html.DisplayNameFor(model => model.NodeData.UserFrom)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Created)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Content)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserTo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UserFrom)
-        </td>
-        <td>
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NodeData.Created)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NodeData.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NodeData.Content)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NodeData.UserTo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NodeData.UserFrom)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { id = item.NodeData.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.NodeData.Id })
+            </td>
+        </tr>
+    }
 
 </table>

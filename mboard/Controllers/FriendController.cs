@@ -41,7 +41,7 @@ namespace mboard.Controllers
 
         public ActionResult InvitationsSend()
         {
-            var users = db.ReadRelatedNodesWithRelationsFrom<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", FriendsTypeRel.Invited.ToString());
+            var users = db.ReadRelatedNodesWithRelationsTo<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", FriendsTypeRel.Invited.ToString());
             return View(users.ToList());
         }
 
@@ -49,13 +49,19 @@ namespace mboard.Controllers
         public ActionResult UndoInv(FriendRelation rel)
         {
             db.DeleteRelation(rel.Id.ToString());
-            return RedirectToAction("InvitationSend");
+            return RedirectToAction("InvitationsSend");
         }
 
         public ActionResult InvitationsReceived()
         {
-            var users = db.ReadRelatedNodesWithRelationsTo<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", "Invited");
+            var users = db.ReadRelatedNodesWithRelationsFrom<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", FriendsTypeRel.Invited.ToString());
             return View(users.ToList());
+        }
+
+        public ActionResult AcceptInv(FriendRelation rel)
+        {
+            db.UpdateRelationSingleProperty(rel.Id, "FriendType", FriendsTypeRel.Friend.ToString());
+            return RedirectToAction("InvitationsReceived");
         }
 
         [HttpPost]
@@ -64,9 +70,10 @@ namespace mboard.Controllers
             db.DeleteRelation(rel.Id.ToString());
             return RedirectToAction("InvitationsReceived");
         }
-        public ActionResult Friends()
+
+        public ActionResult Friend()
         {
-            var users = db.ReadRelatedNodesWithRelations<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", "Friend");
+            var users = db.ReadRelatedNodesWithRelations<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", FriendsTypeRel.Friend.ToString());
             return View(users.ToList());
         }
 
@@ -74,22 +81,17 @@ namespace mboard.Controllers
         public ActionResult FriendRemove(FriendRelation rel)
         {
             db.DeleteRelation(rel.Id.ToString());
-            return RedirectToAction("Friends");
+            return RedirectToAction("Friend");
         }
 
-        public ActionResult FriendsDetails(User user)
+        [HttpPost]
+        public ActionResult FriendDetails(User user)
         {
-            List<RelationWithNode<UserBoardRelation, Board>> boards = null;
+            List<RelationWithNode<Board, UserBoardRelation>> boards = null;
             var rel = db.ReadRelationData<FriendRelation>(User.Identity.GetUserId(), user.Id.ToString());
             if (rel.FriendType.ToString() == FriendsTypeRel.Friend.ToString())
             {
-                try
-                {
-                    boards = db.ReadRelatedNodesWithRelations<UserBoardRelation, Board>(user.Id.ToString(), "VisibleForFriends", true.ToString()).ToList();
-                }
-                catch (Exception)
-                {
-                }
+                    boards = db.ReadRelatedNodesAttrWithRelations<Board, UserBoardRelation>(user.Id.ToString(), "VisibleForFriends", "true").ToList();  
             }
             if (boards == null)
             {
@@ -97,8 +99,8 @@ namespace mboard.Controllers
             }
             else
             {
-                ViewBag.Id = user.Id;
-                ViewBag.UserName = user.Email;
+                //ViewBag.Id = user.Id;
+                //ViewBag.UserName = user.Email;
                 return View(boards);
             }
         }

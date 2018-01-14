@@ -26,7 +26,19 @@
             @Html.DisplayFor(modelItem => item.RelationData.Created)
         </td>
         <td>
-            @Html.ActionLink("RejectInv", "RejectInv", new { id=item.RelationData.Id }) |
+        <td>
+            @using (Html.BeginForm("RejectInv", "Friend"))
+            {
+                @Html.Hidden("id", item.RelationData.Id)
+                <input type="submit" value="Odrzuć" />
+            }
+        </td>
+        <td>
+            @using (Html.BeginForm("AcceptInv", "Friend"))
+        {
+            @Html.Hidden("id", item.RelationData.Id)
+            <input type="submit" value="Zaakceptuj" />
+    }
         </td>
     </tr>
 }

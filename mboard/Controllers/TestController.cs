@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 
 namespace mboard.Controllers
 {
+    [Authorize]
     public class TestController : Controller
     {
         private NeoDbContext db = new NeoDbContext();
@@ -51,19 +52,17 @@ namespace mboard.Controllers
 
         }
 
-        // GET: Test/Details/5
-        public ActionResult Details(string id)
+        [HttpPost]
+        public ActionResult Details([Bind(Include = "Id,Title,name,DiagramData")] Board board)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Board board = db.ReadNode<Board>(id);
             if (board == null)
             {
                 return HttpNotFound();
             }
-            return View(board);
+            else
+            {
+                return View(board);
+            }
         }
 
         // GET: Test/Create

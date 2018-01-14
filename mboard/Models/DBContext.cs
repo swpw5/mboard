@@ -128,12 +128,25 @@ namespace mboard.Models
             IEnumerable<RelationWithNode<NodeResultType, RelationType>> result = query.AsEnumerable();
             return result;
         }
-        public IEnumerable<RelationWithNode<NodeResultType, RelationType>> ReadRelatedNodesWithRelations<NodeResultType, RelationType>(string nodeId, string attribute, string attrValue)
+        public IEnumerable<RelationWithNode<NodeResultType, RelationType>> ReadRelatedNodesWithRelations<NodeResultType, RelationType>(string nodeId, string relAttribute, string relAttrValue)
         {
             gc.Connect();
             string labelRelation = typeof(RelationType).Name;
             var query = gc.Cypher
-                .Match("(parentNode)-[rel:" + labelRelation + "{"+attribute+":"+attrValue+ "}" + "]-(node)")
+                .Match("(parentNode)-[rel:" + labelRelation + "{"+relAttribute+ ":\"" + relAttrValue + "\"}" + "]-(node)")
+                .Where((INodeModel parentNode) => parentNode.Id == nodeId)
+                .Return((node, rel) => new RelationWithNode<NodeResultType, RelationType> { NodeData = node.As<NodeResultType>(), RelationData = rel.As<RelationType>() })
+                .Results;
+            IEnumerable<RelationWithNode<NodeResultType, RelationType>> result = query.AsEnumerable();
+            return result;
+        }
+        public IEnumerable<RelationWithNode<NodeResultType, RelationType>> ReadRelatedNodesAttrWithRelations<NodeResultType, RelationType>(string nodeId, string nodeAttribute, string nodeAttrValue)
+        {
+            gc.Connect();
+            string labelRelation = typeof(RelationType).Name;
+            string labelNode = typeof(NodeResultType).Name;
+            var query = gc.Cypher
+                .Match("(parentNode)-[rel:" + labelRelation + "]-(node:" + labelNode + "{" + nodeAttribute + ":" + nodeAttrValue + "})")
                 .Where((INodeModel parentNode) => parentNode.Id == nodeId)
                 .Return((node, rel) => new RelationWithNode<NodeResultType, RelationType> { NodeData = node.As<NodeResultType>(), RelationData = rel.As<RelationType>() })
                 .Results;
@@ -345,6 +358,16 @@ namespace mboard.Models
                 .WithParam("param", RelationProperty)
                 .ExecuteWithoutResults();
         }
+        public void UpdateRelationSingleProperty(string relationId, string RelationPropertyName, string RelationProperty)
+        {
+            gc.Connect();
+            gc.Cypher
+                .Match("(firstNode)-[rel]-(secondNode)")
+                .Where((IRelation rel) => rel.Id == relationId)
+                .Set("rel." + RelationPropertyName + " = {param}")
+                .WithParam("param", RelationProperty)
+                .ExecuteWithoutResults();
+        }
         public void DeleteRelation<RelationType>(Relation<RelationType> Rel)
         {
             gc.Connect();
@@ -373,8 +396,8 @@ namespace mboard.Models
         {
             gc.Connect();
             gc.Cypher
-                .Match("(firstNode)-[rel:]-(secondNode)")
-                .Where((INodeModel rel) => rel.Id == RelId)
+                .Match("(firstNode)-[rel]-(secondNode)")
+                .Where((IRelation rel) => rel.Id == RelId)
                 .Delete("rel")
                 .ExecuteWithoutResults();
         }

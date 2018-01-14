@@ -240,8 +240,10 @@
     <Content Include="Views\Message\MessagesReaded.cshtml" />
     <Content Include="Views\Message\Details.cshtml" />
     <Content Include="Views\Friend\InvitationsReceived.cshtml" />
-    <Content Include="Views\Friend\Friends.cshtml" />
-    <Content Include="Views\Test\FriendsDetails.cshtml" />
+    <Content Include="Views\Friend\Friend.cshtml">
+      <BrowseToURL>~/Friend/Friend</BrowseToURL>
+    </Content>
+    <Content Include="Views\Friend\FriendDetails.cshtml" />
     <Content Include="Views\Message\SendMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>

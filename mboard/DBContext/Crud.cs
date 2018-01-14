@@ -10,7 +10,9 @@ namespace mboard.Models
         string Id { get; set; }
     }
     public interface IRelation
-    { }
+    {
+        string Id { get; set; }
+    }
     public class Relation<T>
     {
         public string FirstNodeId { get; set; }
