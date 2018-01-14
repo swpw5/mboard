@@ -206,8 +206,10 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\FriendController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -216,24 +218,37 @@
     <Compile Include="Models\Board.cs" />
     <Compile Include="DBContext\Crud.cs" />
     <Compile Include="Models\BoardModelView.cs" />
+    <Compile Include="Models\Enums.cs" />
     <Compile Include="Models\DBContext.cs" />
+    <Compile Include="Models\FriendRelation.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\MessageRelations.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\Pin.cs" />
     <Compile Include="Models\PinConnectionModelView.cs" />
     <Compile Include="Models\PinNoteConnection.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserBoardRelation.cs" />
+    <Compile Include="Models\UserFriendModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <None Include="Views\Friend\Index.cshtml" />
+    <Content Include="Views\Friend\InvitationsSend.cshtml" />
+    <Content Include="Views\Message\MessagesReceived.cshtml" />
+    <Content Include="Views\Message\MessagesSended.cshtml" />
+    <Content Include="Views\Message\MessagesReaded.cshtml" />
+    <Content Include="Views\Message\Details.cshtml" />
+    <Content Include="Views\Friend\InvitationsReceived.cshtml" />
+    <Content Include="Views\Friend\Friends.cshtml" />
+    <Content Include="Views\Test\FriendsDetails.cshtml" />
+    <Content Include="Views\Message\SendMessage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Res\ball.jpg" />
-    <Content Include="Scripts\go-debug.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

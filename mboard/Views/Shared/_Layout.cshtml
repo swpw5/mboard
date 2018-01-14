@@ -24,28 +24,38 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Informacje", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>*@
-
+        <li>@Html.ActionLink("Informacje", "About", "Home")</li>
+        <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>*@
                     @if (User.Identity.IsAuthenticated)
-                    {
-                                <li>@Html.ActionLink("Moje Tablice", "Index", "Test")</li>
-                                <li>@Html.ActionLink("Znajomi", "Index", "Test")</li>
+    {
 
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                @{ 
-                                    string u = User.Identity.GetUserName();
-                                }
-                              
-
-
-
-                            </ul>
-                        </li>
-                    }
-
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        @{
+            string u = User.Identity.GetUserName();
+                        }
+                        <li>@Html.ActionLink("Moje Tablice", "Index", "Test")</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Znajomi <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Szukaj znajomych", "Index", "Friend")</li>
+                        <li>@Html.ActionLink("Znajomi", "Friend", "Friend")</li>
+                        <li>@Html.ActionLink("Zaproszenia otrzymane", "InvitationsReceived", "Friend")</li>
+                        <li>@Html.ActionLink("Zaproszenia wysłane", "InvitationsSend", "Friend")</li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Znajomi <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Otrzymane", "MessagesReceived", "Friend")</li>
+                        <li>@Html.ActionLink("Przeczytane", "MessagesReaded", "Friend")</li>
+                        <li>@Html.ActionLink("Wysłane", "MessagesSended", "Friend")</li>
+                    </ul>
+                </li>
+}
 
                 </ul>
                 @Html.Partial("_LoginPartial")

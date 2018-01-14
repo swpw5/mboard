@@ -5,7 +5,8 @@ using System.Web;
 
 namespace mboard.Models
 {
-    public class PinNoteConnection
+    public class PinNoteConnection : IRelation
     {
+        public string Id { get; set; } = Guid.NewGuid().ToString();
     }
 }
