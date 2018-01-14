@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs/mboard/v15/Server/sqlite3/db.lock
+/.vs/mboard/v15/sqlite3/db.lock
+/.vs/mboard.mvc/v15/Server/sqlite3/db.lock
