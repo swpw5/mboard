@@ -24,6 +24,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -111,6 +112,12 @@
     </Compile>
     <Compile Include="Models\Board.cs" />
     <Compile Include="Models\DbContext.cs" />
+    <Compile Include="Models\ICrud.cs" />
+    <Compile Include="Models\ICrudOptionalEdge.cs" />
+    <Compile Include="Models\Photo.cs" />
+    <Compile Include="Models\Note.cs" />
+    <Compile Include="Models\Pin.cs" />
+    <Compile Include="Models\PinConnector.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -37,3 +37,7 @@ C:\Users\user\Git\mboard\mboard.mvc\bin\Newtonsoft.Json.dll
 C:\Users\user\Git\mboard\mboard.mvc\bin\Neo4jClient.pdb
 C:\Users\user\Git\mboard\mboard.mvc\bin\Neo4jClient.xml
 C:\Users\user\Git\mboard\mboard.mvc\bin\Newtonsoft.Json.xml
+C:\Users\Asztar\Source\Repos\mboard\mboard.mvc\obj\Debug\mboard.mvc.csprojResolveAssemblyReference.cache
+C:\Users\Asztar\Source\Repos\mboard\mboard.mvc\obj\Debug\mboard.mvc.csproj.CoreCompileInputs.cache
+C:\Users\Asztar\Source\Repos\mboard\mboard.mvc\obj\Debug\mboard.mvc.dll
+C:\Users\Asztar\Source\Repos\mboard\mboard.mvc\obj\Debug\mboard.mvc.pdb
