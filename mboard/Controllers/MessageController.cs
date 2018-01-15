@@ -32,15 +32,15 @@ namespace mboard.Controllers
 
         public ActionResult SendMessage(User user)
         {
-            ViewBag.Id = user.Id;
-            ViewBag.Email = user.Email;
+            ViewBag.Email = user.Email.ToString();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SendMessage(Message message, User user)
+        public ActionResult SendMessage(Message message)
         {
+            message.UserFrom = User.Identity.GetUserName();
             MessageRelations send = new MessageRelations()
             {
                 MesType = MessageTypeRel.Send
@@ -49,10 +49,10 @@ namespace mboard.Controllers
             {
                 MesType = MessageTypeRel.Received
             };
-
+            string userId = db.ReadNode<User>("Email", message.UserTo).Id;
             Relation<MessageRelations> rel = new Relation<MessageRelations>()
             {
-                FirstNodeId = user.Id.ToString(),
+                FirstNodeId = userId,
                 SecondNodeId = message.Id.ToString(),
                 Rel = receiv
             };
@@ -64,6 +64,7 @@ namespace mboard.Controllers
         public ActionResult Details(Message message)
         {
             db.UpdateRelationSingleProperty<MessageRelations>(User.Identity.GetUserId(), message.Id.ToString(), "MesType", MessageTypeRel.ReceivedReaded.ToString());
+            message = db.ReadNode<Message>(message.Id);
             return View(message);
         }
 

@@ -40,7 +40,7 @@
     }
         </td>
         <td>
-        @Html.ActionLink("Wyślij wiadomość", "SendMessage", "Message", new { id = item.NodeData.Id}, null)
+        @Html.ActionLink("Wyślij wiadomość", "SendMessage", "Message", new { Email = item.NodeData.Email}, null)
         </td>
     </tr>
 }
