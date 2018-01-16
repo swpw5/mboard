@@ -14,8 +14,8 @@ namespace mboard.Models
 
     public enum MessageTypeRel
     {
-        Send,
-        SendDelete,
+        Sent,
+        SentDelete,
         Received,
         ReceivedReaded,
         ReceivedDeleted

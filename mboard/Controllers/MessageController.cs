@@ -24,9 +24,9 @@ namespace mboard.Controllers
             return View(mes);
         }
 
-        public ActionResult MessagesSended()
+        public ActionResult MessagesSent()
         {
-            var mes = db.ReadRelatedNodesWithRelations<Message, MessageRelations>(User.Identity.GetUserId(), "MesType", MessageTypeRel.Send.ToString());
+            var mes = db.ReadRelatedNodesWithRelations<Message, MessageRelations>(User.Identity.GetUserId(), "MesType", MessageTypeRel.Sent.ToString());
             return View(mes);
         }
 
@@ -38,12 +38,12 @@ namespace mboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SendMessage(Message message)
+        public ActionResult SentMessage(Message message)
         {
             message.UserFrom = User.Identity.GetUserName();
             MessageRelations send = new MessageRelations()
             {
-                MesType = MessageTypeRel.Send
+                MesType = MessageTypeRel.Sent
             };
             MessageRelations receiv = new MessageRelations()
             {
@@ -63,7 +63,7 @@ namespace mboard.Controllers
 
         public ActionResult Details(Message message)
         {
-            if (db.ReadRelationData<MessageRelations>(message.Id, User.Identity.GetUserId()).MesType!= MessageTypeRel.Send)
+            if (db.ReadRelationData<MessageRelations>(message.Id, User.Identity.GetUserId()).MesType!= MessageTypeRel.Sent)
             {
                 db.UpdateRelationSingleProperty<MessageRelations>(User.Identity.GetUserId(), message.Id.ToString(), "MesType", MessageTypeRel.ReceivedReaded.ToString());
             }
