@@ -63,7 +63,10 @@ namespace mboard.Controllers
 
         public ActionResult Details(Message message)
         {
-            db.UpdateRelationSingleProperty<MessageRelations>(User.Identity.GetUserId(), message.Id.ToString(), "MesType", MessageTypeRel.ReceivedReaded.ToString());
+            if (db.ReadRelationData<MessageRelations>(message.Id, User.Identity.GetUserId()).MesType!= MessageTypeRel.Send)
+            {
+                db.UpdateRelationSingleProperty<MessageRelations>(User.Identity.GetUserId(), message.Id.ToString(), "MesType", MessageTypeRel.ReceivedReaded.ToString());
+            }
             message = db.ReadNode<Message>(message.Id);
             return View(message);
         }
