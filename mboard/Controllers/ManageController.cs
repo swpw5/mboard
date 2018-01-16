@@ -13,6 +13,7 @@ namespace mboard.Controllers
     [Authorize]
     public class ManageController : Controller
     {
+        NeoDbContext db = new NeoDbContext();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -309,6 +310,26 @@ namespace mboard.Controllers
             return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         }
 
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AdminIndex(string searchString)
+        {
+            var users = db.ReadNodeType<User>();
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(s => s.Email.Contains(searchString));
+            }
+            users = users.Where(s => !s.Email.Contains(User.Identity.GetUserName()));
+            return View(users.ToList());
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AdminIndex(BanUser ban)
+        {
+            UserManager.SetLockoutEndDate(ban.Id, ban.Date);
+            return View();
+        }
+
         //
         // GET: /Manage/LinkLoginCallback
         public async Task<ActionResult> LinkLoginCallback()
@@ -332,6 +353,7 @@ namespace mboard.Controllers
 
             base.Dispose(disposing);
         }
+
 
 #region Pomocnicy
         // Służy do ochrony XSRF podczas dodawania logowań zewnętrznych

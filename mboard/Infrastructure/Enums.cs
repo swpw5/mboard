@@ -20,4 +20,9 @@ namespace mboard.Models
         ReceivedReaded,
         ReceivedDeleted
     }
+
+    public enum UserRole
+    {
+       Administrator
+    }
 }

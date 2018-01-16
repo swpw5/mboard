@@ -1,0 +1,76 @@
+﻿@model IEnumerable<mboard.Models.User>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("Index", "Friend"))
+{
+    <p>
+        Title: @Html.TextBox("SearchString")
+        <input type="submit" value="Search" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+
+            <td>
+                <button type="button" data-toggle="modal" data-target="#myModal">
+                    Ban
+                </button>
+                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Zablokuj</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    @Html.Label("Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Email", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Value = item.Email } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Id", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Id", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", Value = item.Id } })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Date", htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.Editor("Date", new { htmlAttributes = new { @class = "form-control", InputType = "datetime"} })
+                                    </div>
+                                </div>
+                                <input type="submit" value="Search" />
+                            </div>
+                            </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    }
+
+</table>
+

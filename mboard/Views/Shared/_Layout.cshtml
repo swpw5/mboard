@@ -1,8 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
+@using mboard.Models
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title — moja aplikacja platformy ASP.NET</title>
@@ -24,38 +25,44 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     @*<li>@Html.ActionLink("Strona główna", "Index", "Home")</li>
-        <li>@Html.ActionLink("Informacje", "About", "Home")</li>
-        <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>*@
+                        <li>@Html.ActionLink("Informacje", "About", "Home")</li>
+                        <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>*@
                     @if (User.Identity.IsAuthenticated)
-    {
-
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tablice <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        @{
-            string u = User.Identity.GetUserName();
+                    {
+                        if (User.IsInRole("Administrator"))
+                        {
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Użytkownicy", "AdminIndex", "Manage")</li>
+                                    <li>@Html.ActionLink("Zbanowani", "AdminIndex", "Manage")</li>
+                                </ul>
+                            </li>
+                                        }
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tablice <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Moje Tablice", "Index", "Test")</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Znajomi <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Szukaj znajomych", "Index", "Friend")</li>
+                                    <li>@Html.ActionLink("Znajomi", "Friend", "Friend")</li>
+                                    <li>@Html.ActionLink("Zaproszenia otrzymane", "InvitationsReceived", "Friend")</li>
+                                    <li>@Html.ActionLink("Zaproszenia wysłane", "InvitationsSent", "Friend")</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wiadomości <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("Otrzymane", "MessagesReceived", "Message")</li>
+                                    <li>@Html.ActionLink("Przeczytane", "MessagesReaded", "Message")</li>
+                                    <li>@Html.ActionLink("Wysłane", "MessagesSent", "Message")</li>
+                                </ul>
+                            </li>
                         }
-                        <li>@Html.ActionLink("Moje Tablice", "Index", "Test")</li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Znajomi <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Szukaj znajomych", "Index", "Friend")</li>
-                        <li>@Html.ActionLink("Znajomi", "Friend", "Friend")</li>
-                        <li>@Html.ActionLink("Zaproszenia otrzymane", "InvitationsReceived", "Friend")</li>
-                        <li>@Html.ActionLink("Zaproszenia wysłane", "InvitationsSent", "Friend")</li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Wiadomości <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Otrzymane", "MessagesReceived", "Message")</li>
-                        <li>@Html.ActionLink("Przeczytane", "MessagesReaded", "Message")</li>
-                        <li>@Html.ActionLink("Wysłane", "MessagesSent", "Message")</li>
-                    </ul>
-                </li>
-}
 
                 </ul>
                 @Html.Partial("_LoginPartial")
