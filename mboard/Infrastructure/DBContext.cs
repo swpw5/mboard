@@ -128,6 +128,7 @@ namespace mboard.Models
             IEnumerable<RelationWithNode<NodeResultType, RelationType>> result = query.AsEnumerable();
             return result;
         }
+
         public IEnumerable<RelationWithNode<NodeResultType, RelationType>> ReadRelatedNodesWithRelations<NodeResultType, RelationType>(string nodeId, string relAttribute, string relAttrValue)
         {
             gc.Connect();
@@ -320,6 +321,18 @@ namespace mboard.Models
             Relation<RelationType> result = new Relation<RelationType> { FirstNodeId = idFirstNode, SecondNodeId = idSecondNode, Rel = queryResult };
             return result;
         }
+        public Relation<RelationType> ReadRelation<RelationType>(string idRelation)
+        {
+            string label = typeof(RelationType).Name;
+            gc.Connect();
+            var query = gc.Cypher
+                .Match("(firstNode)-[rel:" + label + "]-(secondNode)")
+                .Where((INodeModel rel) => rel.Id == idRelation)
+                .Return((rel, firstNode, secondNode) => new Relation<RelationType> { FirstNodeId = firstNode.As<INodeModel>().Id, SecondNodeId = secondNode.As<INodeModel>().Id, Rel = rel.As<RelationType>() })
+                .Results;
+            Relation<RelationType> result = query.First();
+            return result;
+        }
         public bool CheckRelationExist<RelationType>(string idFirstNode, string idSecondNode)
         {
             string label = typeof(RelationType).Name;
@@ -458,6 +471,22 @@ namespace mboard.Models
                 .Results;
             Board board = query3.First();
             BoardModelView result = new BoardModelView { Board = board, PinNote = PinNoteCon };
+            return result;
+        }
+
+        public UserPotentialFriendModelView FriendRecommendation(string userId)
+        {
+            gc.Connect();
+            var query = gc.Cypher
+                .Match("(me: User { Id: {id}})-[:FriendRelation] - () -[:FriendRelation] - (potentialFriend)")
+                .With("me, potentialFriend, COUNT(*) AS friendsInCommon")
+                .Where("NOT(me)-[:FriendRelation] - (potentialFriend)")
+                .WithParam("id", userId)
+                .Return((potentialFriend, friendsInCommon) => new UserPotentialFriendModelView { User = potentialFriend.As<User>(), FriendsInCommon =  friendsInCommon.As<int>()})
+                .OrderByDescending("friendsInCommon")
+                .Limit(1)
+                .Results;
+            UserPotentialFriendModelView result = query.First();
             return result;
         }
     }

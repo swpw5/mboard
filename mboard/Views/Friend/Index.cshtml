@@ -9,12 +9,12 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-@using(Html.BeginForm("Index", "Friend"))
+@using (Html.BeginForm("Index", "Friend"))
 {
     <p>
         Title: @Html.TextBox("SearchString")
-        <input type = "submit" value="Search" />
-    </p>    
+        <input type="submit" value="Search" />
+    </p>
 }
 
 <table class="table">
@@ -26,8 +26,8 @@
         <th></th>
     </tr>
 
-    @foreach(var item in Model)
-{
+    @foreach (var item in Model)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Email)
@@ -36,11 +36,29 @@
             <td>
                 @using (Html.BeginForm("Invite", "Friend"))
                 {
-                @Html.Hidden("id", item.Id)
-                <input type="submit" value="Invite" />
+                    @Html.Hidden("id", item.Id)
+                    <input type="submit" value="Invite" />
                 }
             </td>
         </tr>
     }
 
 </table>
+
+<button type="button" data-toggle="modal" data-target="#myModal">
+Proponowany znajomy
+</button>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Proponowany znajomy</h4>
+            </div>
+            <div class="modal-body">
+                @{Html.RenderAction("FriendRecommendation", "Friend");}
+            </div>
+        </div>
+    </div>
+</div>

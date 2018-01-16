@@ -39,7 +39,7 @@ namespace mboard.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult InvitationsSend()
+        public ActionResult InvitationsSent()
         {
             var users = db.ReadRelatedNodesWithRelationsTo<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", FriendsTypeRel.Invited.ToString());
             return View(users.ToList());
@@ -58,16 +58,36 @@ namespace mboard.Controllers
             return View(users.ToList());
         }
 
+        [HttpPost]
+
         public ActionResult AcceptInv(FriendRelation rel)
         {
-            db.UpdateRelationSingleProperty(rel.Id, "FriendType", FriendsTypeRel.Friend.ToString());
+            try
+            {
+                if (db.ReadRelation<FriendRelation>(rel.Id).FirstNodeId == User.Identity.GetUserId() || db.ReadRelation<FriendRelation>(rel.Id).SecondNodeId == User.Identity.GetUserId())
+                    db.UpdateRelationSingleProperty(rel.Id, "FriendType", FriendsTypeRel.Friend.ToString());
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            catch { return HttpNotFound(); }
             return RedirectToAction("InvitationsReceived");
         }
 
         [HttpPost]
         public ActionResult RejectInv(FriendRelation rel)
         {
-            db.DeleteRelation(rel.Id.ToString());
+            try
+            {
+                if (db.ReadRelation<FriendRelation>(rel.Id).FirstNodeId == User.Identity.GetUserId() || db.ReadRelation<FriendRelation>(rel.Id).SecondNodeId == User.Identity.GetUserId())
+                db.DeleteRelation(rel.Id.ToString());
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            catch { return HttpNotFound(); }
             return RedirectToAction("InvitationsReceived");
         }
 
@@ -77,22 +97,45 @@ namespace mboard.Controllers
             return View(users.ToList());
         }
 
+        public ActionResult FriendRecommendation()
+        {
+            UserPotentialFriendModelView recom;
+            try
+            {
+                recom = db.FriendRecommendation(User.Identity.GetUserId());
+            }
+            catch { return HttpNotFound(); }
+                return PartialView(recom);
+            }
+
         [HttpPost]
         public ActionResult FriendRemove(FriendRelation rel)
         {
-            db.DeleteRelation(rel.Id.ToString());
+            try
+            {
+                if (db.ReadRelation<FriendRelation>(rel.Id).FirstNodeId == User.Identity.GetUserId() || db.ReadRelation<FriendRelation>(rel.Id).SecondNodeId == User.Identity.GetUserId())
+                    db.DeleteRelation(rel.Id.ToString());
+                else
+                {
+                    return HttpNotFound();
+                }
+            }
+            catch { return HttpNotFound(); }
             return RedirectToAction("Friend");
         }
 
-        [HttpPost]
         public ActionResult FriendDetails(User user)
         {
             List<RelationWithNode<Board, UserBoardRelation>> boards = null;
-            var rel = db.ReadRelationData<FriendRelation>(User.Identity.GetUserId(), user.Id.ToString());
-            if (rel.FriendType.ToString() == FriendsTypeRel.Friend.ToString())
+            try
             {
-                    boards = db.ReadRelatedNodesAttrWithRelations<Board, UserBoardRelation>(user.Id.ToString(), "VisibleForFriends", "true").ToList();  
+                var rel = db.ReadRelationData<FriendRelation>(User.Identity.GetUserId(), user.Id.ToString());
+                if (rel.FriendType.ToString() == FriendsTypeRel.Friend.ToString())
+                {
+                    boards = db.ReadRelatedNodesAttrWithRelations<Board, UserBoardRelation>(user.Id.ToString(), "VisibleForFriends", "true").ToList();
+                }
             }
+            catch { return HttpNotFound(); }
             if (boards == null)
             {
                 return HttpNotFound();

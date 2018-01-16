@@ -33,14 +33,10 @@
     }
         </td>
         <td>
-            @using (Html.BeginForm("FriendDetails", "Friend"))
-        {
-            @Html.Hidden("id", item.NodeData.Id)
-            <input type="submit" value="Obejrzyj" />
-    }
+            @Html.ActionLink("Tablice", "FriendDetails", "Friend", new { Id = item.NodeData.Id }, null)
         </td>
         <td>
-        @Html.ActionLink("Wyślij wiadomość", "SendMessage", "Message", new { Email = item.NodeData.Email}, null)
+            @Html.ActionLink("Wyślij wiadomość", "SendMessage", "Message", new { Email = item.NodeData.Email}, null)
         </td>
     </tr>
 }

@@ -228,13 +228,14 @@
     <Compile Include="Models\Pin.cs" />
     <Compile Include="Models\PinConnectionModelView.cs" />
     <Compile Include="Models\PinNoteConnection.cs" />
+    <Compile Include="Models\UserPotentialFriendModelView.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserBoardRelation.cs" />
     <Compile Include="Models\UserFriendModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <None Include="Views\Friend\Index.cshtml" />
-    <Content Include="Views\Friend\InvitationsSend.cshtml" />
+    <Content Include="Views\Friend\InvitationsSent.cshtml" />
     <Content Include="Views\Message\MessagesReceived.cshtml" />
     <Content Include="Views\Message\MessagesSent.cshtml" />
     <Content Include="Views\Message\MessagesReaded.cshtml" />
@@ -245,6 +246,7 @@
     </Content>
     <Content Include="Views\Friend\FriendDetails.cshtml" />
     <Content Include="Views\Message\SendMessage.cshtml" />
+    <Content Include="Views\Friend\FriendRecommendation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

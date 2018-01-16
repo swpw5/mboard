@@ -1,0 +1,28 @@
+﻿@using mboard.Models;
+@model mboard.Models.UserPotentialFriendModelView
+
+<div>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.User.UserName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.User.UserName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.FriendsInCommon)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.FriendsInCommon)
+                    </dd>
+                </dl>
+                    @using (Html.BeginForm("Invite", "Friend"))
+                    {
+                    @Html.Hidden("id", Model.User.Id)
+                    <input type="submit" value="Invite" />
+                    }
+            </div>
+

@@ -30,7 +30,7 @@
     {
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Tablice <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         @{
             string u = User.Identity.GetUserName();
@@ -44,7 +44,7 @@
                         <li>@Html.ActionLink("Szukaj znajomych", "Index", "Friend")</li>
                         <li>@Html.ActionLink("Znajomi", "Friend", "Friend")</li>
                         <li>@Html.ActionLink("Zaproszenia otrzymane", "InvitationsReceived", "Friend")</li>
-                        <li>@Html.ActionLink("Zaproszenia wysłane", "InvitationsSend", "Friend")</li>
+                        <li>@Html.ActionLink("Zaproszenia wysłane", "InvitationsSent", "Friend")</li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -52,7 +52,7 @@
                     <ul class="dropdown-menu">
                         <li>@Html.ActionLink("Otrzymane", "MessagesReceived", "Message")</li>
                         <li>@Html.ActionLink("Przeczytane", "MessagesReaded", "Message")</li>
-                        <li>@Html.ActionLink("Wysłane", "MessagesSended", "Message")</li>
+                        <li>@Html.ActionLink("Wysłane", "MessagesSent", "Message")</li>
                     </ul>
                 </li>
 }
