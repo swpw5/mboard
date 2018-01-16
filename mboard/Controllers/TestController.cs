@@ -19,24 +19,23 @@ namespace mboard.Controllers
         private NeoDbContext db = new NeoDbContext();
 
         // GET: Test
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
 
             // Guid g = (Guid)Membership.GetUser(User.Identity.Name).ProviderUserKey;
             ViewBag.Message = User.Identity.GetUserId();
             string userId = User.Identity.GetUserId();
-            NeoDbContext ctx = new NeoDbContext();
-
-            List<Board> boards = null;
-            //string userId = "cdf72cae-adb0-4188-9b1c-69692eb56707";
+            IEnumerable<Board> boards = null;
             try
             {
-                boards = ctx.ReadRelatedNodes<UserBoardRelation, Board>(userId).ToList<Board>();
-
+                boards = db.ReadRelatedNodes<UserBoardRelation, Board>(userId);
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    boards = boards.Where(s => s.Title.Contains(searchString));
+                }
             }
             catch (Exception)
             {
-
                 // throw;
             }
             if (boards == null)
@@ -45,7 +44,7 @@ namespace mboard.Controllers
             }
             else
             {
-                return View(boards);
+                return View(boards.ToList());
             }
 
             //return View(db.ReadNodeType<Board>());
