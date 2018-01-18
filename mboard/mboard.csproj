@@ -219,7 +219,7 @@
     <Compile Include="Models\BanUser.cs" />
     <Compile Include="Models\Board.cs" />
     <Compile Include="Infrastructure\Crud.cs" />
-    <Compile Include="Models\Nieuzywane\BoardModelView.cs" />
+    <Compile Include="Models\Nieuzywane\BoardModelViewTEST.cs" />
     <Compile Include="Infrastructure\Enums.cs" />
     <Compile Include="Infrastructure\DBContext.cs" />
     <Compile Include="Models\FriendRelation.cs" />

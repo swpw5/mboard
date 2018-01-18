@@ -27,10 +27,11 @@
         </td>
         <td>
             @using (Html.BeginForm("UndoInv", "Friend"))
-        {
-            @Html.Hidden("id", item.RelationData.Id)
-            <input type="submit" value="Wycofaj" />
-    }
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id", item.RelationData.Id)
+        <input type="submit" value="Wycofaj" />
+}
         </td>
     </tr>
 }

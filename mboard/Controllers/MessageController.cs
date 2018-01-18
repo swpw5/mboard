@@ -40,25 +40,30 @@ namespace mboard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult SentMessage(Message message)
         {
-            message.UserFrom = User.Identity.GetUserName();
-            MessageRelations send = new MessageRelations()
-            {
-                MesType = MessageTypeRel.Sent
-            };
-            MessageRelations receiv = new MessageRelations()
-            {
-                MesType = MessageTypeRel.Received
-            };
             string userId = db.ReadNode<User>("Email", message.UserTo).Id;
-            Relation<MessageRelations> rel = new Relation<MessageRelations>()
+            if (db.CheckRelationExist<MessageRelations>(userId, User.Identity.GetUserId()))
             {
-                FirstNodeId = userId,
-                SecondNodeId = message.Id.ToString(),
-                Rel = receiv
-            };
-            db.CreateNodeWithRelation(message, User.Identity.GetUserId(), send);
-            db.CreateRelation(rel);
-            return RedirectToAction("MessagesSended");
+                message.UserFrom = User.Identity.GetUserName();
+                MessageRelations send = new MessageRelations()
+                {
+                    MesType = MessageTypeRel.Sent
+                };
+                MessageRelations receiv = new MessageRelations()
+                {
+                    MesType = MessageTypeRel.Received
+                };
+                Relation<MessageRelations> rel = new Relation<MessageRelations>()
+                {
+                    FirstNodeId = userId,
+                    SecondNodeId = message.Id.ToString(),
+                    Rel = receiv
+                };
+                db.CreateNodeWithRelation(message, User.Identity.GetUserId(), send);
+                db.CreateRelation(rel);
+                return RedirectToAction("MessagesSended");
+            }
+            else
+                return HttpNotFound();
         }
 
         public ActionResult Details(Message message)
@@ -67,16 +72,26 @@ namespace mboard.Controllers
             {
                 db.UpdateRelationSingleProperty<MessageRelations>(User.Identity.GetUserId(), message.Id.ToString(), "MesType", MessageTypeRel.ReceivedReaded.ToString());
             }
-            message = db.ReadNode<Message>(message.Id);
-            return View(message);
+            if (db.CheckRelationExist<MessageRelations>(message.Id, User.Identity.GetUserId()))
+            {
+                message = db.ReadNode<Message>(message.Id);
+                return View(message);
+            }
+            else
+                return HttpNotFound();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(Message message)
         {
-            db.UpdateRelationSingleProperty<MessageRelations>(User.Identity.GetUserId(), message.Id.ToString(), "MesType", MessageTypeRel.ReceivedReaded.ToString());
-            return RedirectToAction("MessagesReceived");
+            if (db.CheckRelationExist<MessageRelations>(message.Id, User.Identity.GetUserId()))
+            {
+                db.UpdateRelationSingleProperty<MessageRelations>(User.Identity.GetUserId(), message.Id.ToString(), "MesType", MessageTypeRel.ReceivedReaded.ToString());
+                return RedirectToAction("MessagesReceived");
+            }
+            else
+                return HttpNotFound();
         }
     }
 }

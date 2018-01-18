@@ -28,17 +28,19 @@
         <td>
         <td>
             @using (Html.BeginForm("RejectInv", "Friend"))
-            {
-                @Html.Hidden("id", item.RelationData.Id)
-                <input type="submit" value="Odrzuć" />
-            }
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id", item.RelationData.Id)
+        <input type="submit" value="Odrzuć" />
+}
         </td>
         <td>
             @using (Html.BeginForm("AcceptInv", "Friend"))
-        {
-            @Html.Hidden("id", item.RelationData.Id)
-            <input type="submit" value="Zaakceptuj" />
-    }
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id", item.RelationData.Id)
+        <input type="submit" value="Zaakceptuj" />
+}
         </td>
     </tr>
 }

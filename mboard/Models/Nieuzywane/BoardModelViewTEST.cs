@@ -6,7 +6,7 @@ using System.Web;
 
 namespace mboard.Models
 {
-    public class BoardModelView
+    public class BoardModelViewTEST
     {
         public Board Board { get; set; }
         public List<RelationWithNodes<Pin,Note,PinNoteConnection>> PinNote { get; set; }

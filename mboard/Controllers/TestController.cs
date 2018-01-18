@@ -50,17 +50,23 @@ namespace mboard.Controllers
             //return View(db.ReadNodeType<Board>());
         }
 
-        [HttpPost]
-        public ActionResult Details([Bind(Include = "Id,Title,name,DiagramData")] Board board)
+        public ActionResult Details(Board board)
         {
-            if (board == null)
+            try
             {
-                return HttpNotFound();
+                string userId = db.ReadRelatedNodes<UserBoardRelation, User>(board.Id).FirstOrDefault().Id;
+                var rel = db.ReadRelationData<FriendRelation>(User.Identity.GetUserId(), userId);
+                if (rel.FriendType.ToString() == FriendsTypeRel.Friend.ToString() && db.ReadNode<Board>(board.Id).VisibleForFriends == true)
+                {
+                    board = db.ReadNode<Board>(board.Id);
+                    return View(board);
+                }
+                else
+                {
+                    return HttpNotFound();
+                }
             }
-            else
-            {
-                return View(board);
-            }
+            catch { return HttpNotFound(); }
         }
 
         // GET: Test/Create
@@ -71,6 +77,7 @@ namespace mboard.Controllers
 
         // POST: Test/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Title")] Board board)
         {
             if (ModelState.IsValid)
@@ -100,16 +107,16 @@ namespace mboard.Controllers
         // GET: Test/Edit/5
         public ActionResult Edit(string id)
         {
-            if (id == null)
+            if (db.CheckRelationExist<UserBoardRelation>(id, User.Identity.GetUserId()))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                Board board = db.ReadNode<Board>(id);
+                if (board == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(board);
             }
-            Board board = db.ReadNode<Board>(id);
-            if (board == null)
-            {
-                return HttpNotFound();
-            }
-            return View(board);
+            else { return HttpNotFound(); }
         }
 
         public ActionResult Search(Tag tag)
@@ -122,36 +129,42 @@ namespace mboard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Board board)
         {
-            if (ModelState.IsValid)
+            if (db.CheckRelationExist<UserBoardRelation>(board.Id, User.Identity.GetUserId()))
             {
-                db.UpdateAllPropNode<Board>(board.Id, board);
-                //var d = board.DiagramData;
-                if (board.DiagramData != null)
+                if (ModelState.IsValid)
                 {
-                    string replacement = Regex.Replace(board.DiagramData, @"\t|\n|\r", "");
-                    string diag = replacement.Replace("'", "\"");
-
-                    db.UpdateSinglePropNode(board.Id, diag, "DiagramData");
-
+                    db.UpdateAllPropNode(board.Id, board);
+                    //var d = board.DiagramData;
+                    if (board.DiagramData != null)
+                    {
+                        string replacement = Regex.Replace(board.DiagramData, @"\t|\n|\r", "");
+                        string diag = replacement.Replace("'", "\"");
+                        db.UpdateSinglePropNode(board.Id, diag, "DiagramData");
+                    }
+                    return RedirectToAction("Index");
                 }
-                return RedirectToAction("Index");
+                return View(board);
             }
-            return View(board);
+            else { return HttpNotFound(); }
         }
 
         // GET: Test/Delete/5
         public ActionResult Delete(string id)
         {
-            if (id == null)
+            if (db.CheckRelationExist<UserBoardRelation>(id, User.Identity.GetUserId()))
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (id == null)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
+                Board board = db.ReadNode<Board>(id);
+                if (board == null)
+                {
+                    return HttpNotFound();
+                }
+                return View(board);
             }
-            Board board = db.ReadNode<Board>(id);
-            if (board == null)
-            {
-                return HttpNotFound();
-            }
-            return View(board);
+            else { return HttpNotFound(); }
         }
 
         // POST: Test/Delete/5
@@ -159,9 +172,13 @@ namespace mboard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            Board board = db.ReadNode<Board>(id);
-            db.DeleteNodeWithRelations(id);
-            return RedirectToAction("Index");
+            if (db.CheckRelationExist<UserBoardRelation>(id, User.Identity.GetUserId()))
+            {
+                Board board = db.ReadNode<Board>(id);
+                db.DeleteNodeWithRelations(id);
+                return RedirectToAction("Index");
+            }
+            else { return HttpNotFound(); }
         }
     }
 }

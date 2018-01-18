@@ -27,10 +27,11 @@
         </td>
         <td>
             @using (Html.BeginForm("FriendRemove", "Friend"))
-        {
-            @Html.Hidden("id", item.RelationData.Id)
-            <input type="submit" value="Usuń" />
-    }
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id", item.RelationData.Id)
+        <input type="submit" value="Usuń" />
+}
         </td>
         <td>
             @Html.ActionLink("Tablice", "FriendDetails", "Friend", new { Id = item.NodeData.Id }, null)

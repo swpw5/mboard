@@ -1,28 +1,31 @@
 ﻿@using mboard.Models;
 @model mboard.Models.UserPotentialFriendModelView
-
+@{if (Model!=null) {
 <div>
-                <dl class="dl-horizontal">
-                    <dt>
-                        @Html.DisplayNameFor(model => model.User.UserName)
-                    </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User.UserName)
+        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.User.UserName)
-                    </dd>
+        <dd>
+            @Html.DisplayFor(model => model.User.UserName)
+        </dd>
 
-                    <dt>
-                        @Html.DisplayNameFor(model => model.FriendsInCommon)
-                    </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.FriendsInCommon)
+        </dt>
 
-                    <dd>
-                        @Html.DisplayFor(model => model.FriendsInCommon)
-                    </dd>
-                </dl>
-                    @using (Html.BeginForm("Invite", "Friend"))
-                    {
-                    @Html.Hidden("id", Model.User.Id)
-                    <input type="submit" value="Invite" />
-                    }
-            </div>
+        <dd>
+            @Html.DisplayFor(model => model.FriendsInCommon)
+        </dd>
+    </dl>
+    @using (Html.BeginForm("Invite", "Friend"))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Hidden("id", Model.User.Id)
+        <input type="submit" value="Invite" />
+    }
+</div>
+    }
+else { <h4> Brak potencjalnych znajomych</h4> } }
 

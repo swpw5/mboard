@@ -40,7 +40,7 @@ namespace mboard.Controllers
                     }
                 }
             }
-            return RedirectToAction("Edit", "Test", new { id = tag.TableId });
+            return HttpNotFound();
         }
 
         public ActionResult Index()
@@ -63,17 +63,21 @@ namespace mboard.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeletePost(TagModelView tag)
         {
-            try
+            if (db.CheckRelationExist<UserBoardRelation>(tag.TableId, User.Identity.GetUserId()))
             {
-                db.DeleteRelation<TagRelation>(tag.TableId, tag.Id);
+                try
+                {
+                    db.DeleteRelation<TagRelation>(tag.TableId, tag.Id);
+                }
+                catch { return HttpNotFound(); }
+                try
+                {
+                    db.DeleteNode(tag.Id);
+                }
+                catch { }
+                return RedirectToAction("Edit", "Test", new { Id = tag.TableId });
             }
-            catch { return HttpNotFound(); }
-            try
-            {
-                db.DeleteNode(tag.Id);
-            }
-            catch { }
-            return RedirectToAction("Edit", "Test", new {Id = tag.TableId });
+            return HttpNotFound();
         }
     }
 }

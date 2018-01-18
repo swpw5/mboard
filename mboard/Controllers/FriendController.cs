@@ -27,6 +27,7 @@ namespace mboard.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Invite(User user)
         {
             string id = user.Id.ToString();
@@ -46,10 +47,11 @@ namespace mboard.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult UndoInv(FriendRelation rel)
         {
             db.DeleteRelation(rel.Id.ToString());
-            return RedirectToAction("InvitationsSend");
+            return RedirectToAction("InvitationsSent");
         }
 
         public ActionResult InvitationsReceived()
@@ -59,7 +61,7 @@ namespace mboard.Controllers
         }
 
         [HttpPost]
-
+        [ValidateAntiForgeryToken]
         public ActionResult AcceptInv(FriendRelation rel)
         {
             try
@@ -76,6 +78,7 @@ namespace mboard.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult RejectInv(FriendRelation rel)
         {
             try
@@ -109,6 +112,7 @@ namespace mboard.Controllers
             }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult FriendRemove(FriendRelation rel)
         {
             try

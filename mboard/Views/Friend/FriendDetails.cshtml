@@ -15,9 +15,6 @@
             @Html.DisplayNameFor(model => model.NodeData.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NodeData.name)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.NodeData.VisibleForFriends)
         </th>
         <th></th>
@@ -30,25 +27,10 @@
                 @Html.DisplayFor(modelItem => item.NodeData.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NodeData.name)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.NodeData.VisibleForFriends)
             </td>
             <td>
-                @using (Html.BeginForm("Details", "Test"))
-    {
-            //@Html.EditorFor(modelItem => item.NodeData.Id, new { htmlAttributes = new { @class = "form-control" } })
-            //@Html.EditorFor(modelItem => item.NodeData.Title, new { htmlAttributes = new { @class = "form-control" } })
-            //@Html.EditorFor(modelItem => item.NodeData.DiagramData, new { htmlAttributes = new { @class = "form-control" } })
-            //@Html.EditorFor(modelItem => item.NodeData.name, new { htmlAttributes = new { @class = "form-control" } })
-
-            @Html.Hidden("Id", item.NodeData.Id)
-            @Html.Hidden("Title", item.NodeData.Title)
-            @Html.Hidden("DiagramData", item.NodeData.DiagramData)
-            @Html.Hidden("name", item.NodeData.name)
-            <input type="submit" value="Obejrzyj" />
-}
+                @Html.ActionLink("Obejrzyj", "Details", "Test",new { Id = item.NodeData.Id, UserId = item.RelationData.Id },null)
             </td>
         </tr>
     }

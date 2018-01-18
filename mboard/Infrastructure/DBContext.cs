@@ -450,7 +450,7 @@ namespace mboard.Models
             int result = (int)query.FirstOrDefault();
             return result;
         }
-        public BoardModelView PopulateBoardModelView(string parentNodeId)
+        /*public BoardModelView PopulateBoardModelView(string parentNodeId)
         {
             gc.Connect();
             var query1 = gc.Cypher
@@ -473,7 +473,7 @@ namespace mboard.Models
             Board board = query3.First();
             BoardModelView result = new BoardModelView { Board = board, PinNote = PinNoteCon };
             return result;
-        }
+        }*/
 
         public UserPotentialFriendModelView FriendRecommendation(string userId)
         {
