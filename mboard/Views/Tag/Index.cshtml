@@ -1,0 +1,5 @@
+﻿@model IEnumerable<mboard.Models.Tag>
+
+@foreach (var item in Model) {
+            <span>@Html.ActionLink(item.Title, "Search", "Test", new { Id = item.Id }, null) |</span>
+}

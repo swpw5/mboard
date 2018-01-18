@@ -17,10 +17,9 @@
         Title: @Html.TextBox("SearchString")
         <input type="submit" value="Search" />
     </p>
-}
+    }
     @*@ViewBag.Message;*@
     @* @Html.ActionLink("Create New", "Create")*@
-</p>
 
     <div class="board-container">
         @foreach (var item in Model)
@@ -33,6 +32,10 @@
             </div>
         }
     </div>
+    <hr />
+    <p>
+        @{Html.RenderAction("Index", "Tag");}
+    </p>
 
 
     @*<table class="table">

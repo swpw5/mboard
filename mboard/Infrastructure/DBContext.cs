@@ -211,7 +211,7 @@ namespace mboard.Models
                 .WithParam("val", value)
                 .Return(node => node.As<NodeType>())
                 .Results;
-            NodeType result = query.First();
+            NodeType result = query.FirstOrDefault();
             return result;
         }
         public NodeType ReadNode<NodeType>(string nodeId)
@@ -222,7 +222,7 @@ namespace mboard.Models
                 .Where((INodeModel node) => node.Id == nodeId)
                 .Return(node => node.As<NodeType>())
                 .Results;
-            NodeType result = query.First();
+            NodeType result = query.FirstOrDefault();
             return result;
         }
         public IEnumerable<NodeType> ReadNodeType<NodeType>()
@@ -244,7 +244,7 @@ namespace mboard.Models
                 .Where((INodeModel node) => node.Id == Node.Id)
                 .Return(node => node.As<NodeType>())
                 .Results;
-            NodeType result = query.First();
+            NodeType result = query.FirstOrDefault();
             return result;
         }
         public void DeleteNode(string nodeId)
@@ -274,6 +274,7 @@ namespace mboard.Models
                 .Delete("node")
                 .ExecuteWithoutResults();
         }
+
         public void UpdateSinglePropNode(string nodeId, string nodeProperty, string nodePropName)
         {
             gc.Connect();
@@ -304,7 +305,7 @@ namespace mboard.Models
                 .AndWhere((INodeModel secondNode) => secondNode.Id == idSecondNode)
                 .Return(rel => rel.As<RelationType>())
                 .Results;
-            RelationType result = query.First();
+            RelationType result = query.FirstOrDefault();
             return result;
         }
         public Relation<RelationType> ReadRelation<RelationType>(string idFirstNode, string idSecondNode)
@@ -317,7 +318,7 @@ namespace mboard.Models
                 .AndWhere((INodeModel secondNode) => secondNode.Id == idSecondNode)
                 .Return(rel => rel.As<RelationType>())
                 .Results;
-            RelationType queryResult = query.First();
+            RelationType queryResult = query.FirstOrDefault();
             Relation<RelationType> result = new Relation<RelationType> { FirstNodeId = idFirstNode, SecondNodeId = idSecondNode, Rel = queryResult };
             return result;
         }
@@ -330,7 +331,7 @@ namespace mboard.Models
                 .Where((INodeModel rel) => rel.Id == idRelation)
                 .Return((rel, firstNode, secondNode) => new Relation<RelationType> { FirstNodeId = firstNode.As<INodeModel>().Id, SecondNodeId = secondNode.As<INodeModel>().Id, Rel = rel.As<RelationType>() })
                 .Results;
-            Relation<RelationType> result = query.First();
+            Relation<RelationType> result = query.FirstOrDefault();
             return result;
         }
         public bool CheckRelationExist<RelationType>(string idFirstNode, string idSecondNode)
@@ -343,7 +344,7 @@ namespace mboard.Models
                 .AndWhere((INodeModel secondNode) => secondNode.Id == idSecondNode)
                 .Return(rel => rel.As<RelationType>())
                 .Results;
-            bool result = (query.First() != null) ? true : false;
+            bool result = (query.FirstOrDefault() != null) ? true : false;
             return result;
         }
         public bool CheckRelationExist<RelationType>(Relation<RelationType> Rel)
@@ -356,7 +357,7 @@ namespace mboard.Models
                 .AndWhere((INodeModel secondNode) => secondNode.Id == Rel.SecondNodeId)
                 .Return(rel => rel.As<RelationType>())
                 .Results;
-            bool result = (query.First() != null) ? true : false;
+            bool result = (query.FirstOrDefault() != null) ? true : false;
             return result;
         }
         public void UpdateRelationSingleProperty<RelationType>(string FirstNodeId, string SecondNodeId, string RelationPropertyName, string RelationProperty)
@@ -446,7 +447,7 @@ namespace mboard.Models
                 .Return(nodeRel => nodeRel.Count())
                 .Results;
             gc.Connect();
-            int result = (int)query.First();
+            int result = (int)query.FirstOrDefault();
             return result;
         }
         public BoardModelView PopulateBoardModelView(string parentNodeId)
@@ -486,7 +487,44 @@ namespace mboard.Models
                 .OrderByDescending("friendsInCommon")
                 .Limit(1)
                 .Results;
-            UserPotentialFriendModelView result = query.First();
+            UserPotentialFriendModelView result = query.FirstOrDefault();
+            return result;
+        }
+
+        public IEnumerable<Tag> TagIndex(string userId)
+        {
+            gc.Connect();
+            var query = gc.Cypher
+                .Match("(u:User)-[:UserBoardRelation]-(:Board)-[:TagRelation]-(t:Tag)")
+                .Where((INodeModel u) => u.Id == userId)
+                .ReturnDistinct(t => t.As<Tag>())
+                .Results;
+            IEnumerable<Tag> result = query.AsEnumerable();
+            return result;
+        }
+
+        public IEnumerable<Board> TagSearch(string userId, string tagId)
+        {
+            gc.Connect();
+            var query = gc.Cypher
+                .Match("(u:User)-[:UserBoardRelation]-(b:Board)-[:TagRelation]-(t:Tag)")
+                .Where((INodeModel u) => u.Id == userId)
+                .AndWhere((INodeModel t) => t.Id == tagId)
+                .Return(b => b.As<Board>())
+                .Results;
+            IEnumerable<Board> result = query.AsEnumerable();
+            return result;
+        }
+
+        public IEnumerable<Tag> BoardTagIndex(string boardId)
+        {
+            gc.Connect();
+            var query = gc.Cypher
+                .Match("(board:Board)-[:TagRelation]-(t:Tag)")
+                .Where((INodeModel board) => board.Id == boardId)
+                .ReturnDistinct(t => t.As<Tag>())
+                .Results;
+            IEnumerable<Tag> result = query.AsEnumerable();
             return result;
         }
     }

@@ -1,0 +1,22 @@
+﻿@model mboard.Models.TagModelView
+
+<h4>Na pewno chcesz usunąć tag?</h4>
+<div>
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm("DeletePost", "Tag", FormMethod.Post, new {}))
+    {
+        @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.TableId)
+    </div>
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" />
+            </div>
+            }
+        </div>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<mboard.Models.Tag>
+
+@foreach (var item in Model)
+{
+        <button type="button" data-toggle="modal" data-target="#myModal2" class="btn btn-link">
+            @Html.DisplayFor(modelItem => item.Title)
+        </button>
+    <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel2">Usuń Tag</h4>
+                </div>
+                <div class="modal-body">
+                    @{Html.RenderAction("Delete", "Tag", new { Id = item.Id, TableId = ViewBag.boardId });}
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+

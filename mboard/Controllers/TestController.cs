@@ -48,7 +48,6 @@ namespace mboard.Controllers
             }
 
             //return View(db.ReadNodeType<Board>());
-
         }
 
         [HttpPost]
@@ -82,9 +81,10 @@ namespace mboard.Controllers
                 //b.Title = board.Title;
                 //Debug.WriteLine(b.name);
                 string userId = User.Identity.GetUserId();
-                UserBoardRelation rel = new UserBoardRelation();
-                rel.Description = "testwidok";
-
+                UserBoardRelation rel = new UserBoardRelation()
+                {
+                    Description = "testwidok"
+                };
                 NeoDbContext ctx = new NeoDbContext();
                 // ctx.CreateNode(user);
                 ctx.CreateNodeWithRelation(board, userId, rel);
@@ -110,6 +110,11 @@ namespace mboard.Controllers
                 return HttpNotFound();
             }
             return View(board);
+        }
+
+        public ActionResult Search(Tag tag)
+        {
+            return View("Index", db.TagSearch(User.Identity.GetUserId(), tag.Id));
         }
 
         // POST: Test/Edit/5
@@ -155,7 +160,7 @@ namespace mboard.Controllers
         public ActionResult DeleteConfirmed(string id)
         {
             Board board = db.ReadNode<Board>(id);
-            db.DeleteNode(id);
+            db.DeleteNodeWithRelations(id);
             return RedirectToAction("Index");
         }
     }

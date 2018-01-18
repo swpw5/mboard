@@ -1,8 +1,10 @@
 {
   "ExpandedNodes": [
     "",
+    "\\mboard",
     "\\mboard.mvc",
-    "\\mboard.mvc.Tests"
+    "\\mboard.mvc.Tests",
+    "\\mboard\\Controllers"
   ],
   "PreviewInSolutionExplorer": false
 }

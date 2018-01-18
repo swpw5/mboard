@@ -7,8 +7,8 @@
 
 
 
-@using (Html.BeginForm())
-{
+@using (Html.BeginForm("Edit","Test", FormMethod.Post))
+ {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -30,14 +30,14 @@
     </div>
 
 
-        <div id="diagram-buttons">
- 
-                    <input type="submit" value="Save" id="SaveButton" class="btn btn-success"/>
-                    
+    <div id="diagram-buttons">
 
-                    @Html.EditorFor(model => model.DiagramData, new { htmlAttributes = new { @class = "form-control", @name = "mySavedModel2"} })
+        <input type="submit" value="Save" id="SaveButton" class="btn btn-success" />
 
-                    <textarea id="mySavedModel" name="mySavedModel" class="form-control">
+
+        @Html.EditorFor(model => model.DiagramData, new { htmlAttributes = new { @class = "form-control", @name = "mySavedModel2" } })
+
+        <textarea id="mySavedModel" name="mySavedModel" class="form-control">
 
 
                         @if (Model.DiagramData != null)
@@ -112,14 +112,31 @@
 
                     </textarea>
 
-        </div> <!--end of diagram buttons-->
-   
-} 
+    </div> <!--end of diagram buttons-->
 
+ }
+@{Html.RenderAction("IndexBoard", "Tag", new { boardId = Model.Id });}
+
+    <button type="button" data-toggle="modal" data-target="#myModal1">
+        +
+    </button>
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
 
+<div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel1">Dodaj Tag</h4>
+            </div>
+            <div class="modal-body">
+                @{Html.RenderAction("Create", "Tag", new {TableId = Model.Id });}
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
@@ -166,27 +183,27 @@
                         //console.log(node);
                         saveDiagramState();
                     }
-                
-                
+
+
                 },
                 new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-               
-                $(go.Shape, "RoundedRectangle",
-                {
-                    name: "shape",
-                    parameter1: 5,//corner radius
-                    fill: $(go.Brush, "Linear", { 0: "rgb(222, 222, 255)", 1: "rgb(233, 233, 200)" }),
-                    stroke: null,
-                    portId: "", //node port not a whole node
-                    fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
-                    toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true,
-                    cursor: "pointer"
 
-                }),
-                $(go.Panel, "Horizontal", 
-                    $(go.Picture, 
+                $(go.Shape, "RoundedRectangle",
+                    {
+                        name: "shape",
+                        parameter1: 5,//corner radius
+                        fill: $(go.Brush, "Linear", { 0: "rgb(222, 222, 255)", 1: "rgb(233, 233, 200)" }),
+                        stroke: null,
+                        portId: "", //node port not a whole node
+                        fromLinkable: true, fromLinkableSelfNode: true, fromLinkableDuplicates: true,
+                        toLinkable: true, toLinkableSelfNode: true, toLinkableDuplicates: true,
+                        cursor: "pointer"
+
+                    }),
+                $(go.Panel, "Horizontal",
+                    $(go.Picture,
                         {
-                            name: "Picture", 
+                            name: "Picture",
                             desiredSize: new go.Size(39, 50),
                             margin: new go.Margin(6, 8, 6, 10),
                         },
@@ -199,7 +216,7 @@
                             defaultAlignment: go.Spot.Left
                         },
                         $(go.RowColumnDefinition, { column: 2, width: 4 }),
-                        $(go.TextBlock, 
+                        $(go.TextBlock,
                             {
                                 row: 0, column: 0, columnSpan: 5,
                                 font: "bold 12pt Segoe UI,sans-serif",
@@ -218,18 +235,18 @@
                             },
                             new go.Binding("text", "comments").makeTwoWay())
                     )
-            
+
                 )
 
-              );
+            );
 
 
         myDiagram.nodeTemplate.selectionAdornmentTemplate =
             $(go.Adornment, "Spot",
                 $(go.Panel, "Auto",
 
-                        $(go.Shape, { fill: null, stroke: "gold", strokeWidth: 2 }),
-                        $(go.Placeholder)
+                    $(go.Shape, { fill: null, stroke: "gold", strokeWidth: 2 }),
+                    $(go.Placeholder)
 
 
                 ),
@@ -275,7 +292,7 @@
             //select new node
             var newNode = diagram.findNodeForData(toData);
             diagram.select(newNode);
-            
+
             diagram.commitTransaction("Add State");
             diagram.scrollToRect(newNode.actualBounds);
 
@@ -299,8 +316,8 @@
                     }
                 ),
                 $(go.Shape, //link shape
-                    {toArrow: "standard", stroke: null}),
-                $(go.Panel, "Auto", 
+                    { toArrow: "standard", stroke: null }),
+                $(go.Panel, "Auto",
                     $(go.Shape, //label background
                         {
                             fill: $(go.Brush, "Radial", { 0: "rgb(255, 240, 240)", 0.3: "rgb(255, 240, 240)", 1: "rgba(255, 240, 240, 0)" }), stroke: null
@@ -314,10 +331,10 @@
                         },
 
                         new go.Binding("text").makeTwoWay())
-                    )
+                )
 
 
-                );
+            );
 
 
         load();
@@ -330,7 +347,7 @@
         document.getElementById("DiagramData").value = myDiagram.model.toJson();
         console.log(myDiagram.model.toJson);
 
-        
+
     }
     function load() {
         myDiagram.model = go.Model.fromJson(document.getElementById("DiagramData").value);
