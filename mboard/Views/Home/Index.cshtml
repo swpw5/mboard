@@ -6,6 +6,10 @@
     <div class="inner">
     <h1>MBoard</h1>
     <p class="lead">To aplikacja internetowa do tworzenia interaktywnych tablic, którymi możesz się dzielić ze swoimi znajomymi. </p>
+        @{ if (!User.Identity.IsAuthenticated)
+            {
     <p><a href="/Account/Register" class="btn btn-success">Zarejestruj się &raquo;</a></p>
+                }
+            }
     </div>
 </div>
