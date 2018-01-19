@@ -241,6 +241,7 @@
     <Compile Include="Startup.cs" />
     <Content Include="Views\Manage\AdminIndex.cshtml" />
     <Content Include="Views\Manage\AdminBanIndex.cshtml" />
+    <Content Include="Infrastructure\2018-01-19.dump" />
     <None Include="Views\Friend\Index.cshtml" />
     <Content Include="Views\Friend\InvitationsSent.cshtml" />
     <Content Include="Views\Message\MessagesReceived.cshtml" />
