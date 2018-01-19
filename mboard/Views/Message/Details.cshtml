@@ -4,10 +4,10 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>Czytaj</h2>
 
 <div>
-    <h4>Message</h4>
+    <h4>Wiadomość</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -53,5 +53,5 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Otrzymane", "MessagesReceived")
+    @Html.ActionLink("Otrzymane", "MessagesReceived", null, new { @class = "btn btn-primary" })
 </p>

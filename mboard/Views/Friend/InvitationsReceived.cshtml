@@ -5,7 +5,8 @@
     ViewBag.Title = "Invitations";
 }
 
-<h2>View</h2>
+<h2>Otrzymane</h2>
+<h4>Zaproszenia</h4>
 
 <p>
 </p>
@@ -35,7 +36,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("id", item.RelationData.Id)
-            <input type="submit" value="Odrzuć" />
+            <input class="btn btn-danger btn-sm" type="submit" value="Odrzuć" />
     }
         </td>
         <td>
@@ -43,7 +44,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("id", item.RelationData.Id)
-            <input type="submit" value="Zaakceptuj" />
+            <input class="btn btn-success btn-sm" type="submit" value="Zaakceptuj" />
     }
         </td>
     </tr>

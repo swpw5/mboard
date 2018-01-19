@@ -4,16 +4,14 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Szukaj</h2>
+<h4>Znajomych</h4>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 @using (Html.BeginForm("Index", "Friend"))
 {
     <p>
-        Title: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+        Nazwa: @Html.TextBox("SearchString")
+        <input class="btn btn-primary btn-sm" type="submit" value="Szukaj" />
     </p>
 }
 
@@ -38,7 +36,7 @@
     {
             @Html.AntiForgeryToken()
             @Html.Hidden("id", item.Id)
-            <input type="submit" value="Invite" />
+            <input class="btn btn-success btn-sm" type="submit" value="Zaproś" />
 }
             </td>
         </tr>
@@ -46,7 +44,7 @@
 
 </table>
 
-<button type="button" data-toggle="modal" data-target="#myModal">
+<button class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal">
 Proponowany znajomy
 </button>
 

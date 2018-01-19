@@ -5,47 +5,50 @@
     ViewBag.Title = "View";
 }
 
-<h2>View</h2>
+<h2>Otrzymane</h2>
+<h4>Wiadomości</h4>
 
-<p>
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NodeData.Created)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NodeData.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NodeData.UserTo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NodeData.UserFrom)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
-    {
+    <p>
+    </p>
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NodeData.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NodeData.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NodeData.UserTo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NodeData.UserFrom)
-            </td>
-            <td>
-                @Html.ActionLink("Details", "Details", new { id = item.NodeData.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.NodeData.Id })
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.NodeData.Created)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NodeData.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NodeData.UserTo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NodeData.UserFrom)
+            </th>
+            <th></th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NodeData.Created)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NodeData.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NodeData.UserTo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NodeData.UserFrom)
+                </td>
+                <td>
+                    @Html.ActionLink("Przeczytaj", "Details", new { id = item.NodeData.Id }, new { @class = "btn btn-success btn-sm" })
+                </td>
+                <td>
+                    @Html.ActionLink("Usuń", "Delete", new { id = item.NodeData.Id }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>

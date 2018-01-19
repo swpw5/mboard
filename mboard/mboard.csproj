@@ -239,6 +239,7 @@
     <Compile Include="Models\UserFriendModelView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Content Include="Materials\11korkowaeco169.jpg" />
     <Content Include="Views\Manage\AdminIndex.cshtml" />
     <Content Include="Views\Manage\AdminBanIndex.cshtml" />
     <Content Include="Infrastructure\2018-01-19.dump" />

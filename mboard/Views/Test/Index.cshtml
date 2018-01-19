@@ -5,17 +5,20 @@
     ViewBag.Title = "Tablice";
 }
 
-@*<h2>Index</h2>*@
+<h2>Moje</h2>
+<h4>Tablice</h4>
 
 <hr />
-@Html.ActionLink("Nowa Tablica", "Create", "Test")
+<button class="btn btn-success" onclick="location.href='@Url.Action("Create", "Test")'">
+    Nowa Tablica
+</button>
 <hr />
 <p>
     @using (Html.BeginForm("Index", "Test"))
     {
     <p>
-        Title: @Html.TextBox("SearchString")
-        <input type="submit" value="Search" />
+        Nazwa: @Html.TextBox("SearchString")
+        <input class="btn btn-primary btn-sm" type="submit" value="Szukaj" />
     </p>
     }
     @*@ViewBag.Message;*@
@@ -28,7 +31,6 @@
                 @Html.DisplayFor(modelItem => item.Title)
 
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id })
-                <p>@item.Id</p>
             </div>
         }
     </div>

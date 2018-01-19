@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<mboard.Models.Tag>
 
 @foreach (var item in Model) {
-            <span>@Html.ActionLink(item.Title, "Search", "Test", new { Id = item.Id }, null) |</span>
+<button class="btn btn-primary" onclick="location.href='@Url.Action("Search", "Test", new { Id = item.Id }, null)'"> @item.Title</button>
 }

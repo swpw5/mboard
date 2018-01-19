@@ -11,38 +11,43 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Board</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+<div class="form-horizontal">
+    <h2>Edycja</h2>
+    <h4>Tablicy</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-            </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
         </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.VisibleForFriends, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.VisibleForFriends)
-                    @Html.ValidationMessageFor(model => model.VisibleForFriends, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div id="myDiagramDiv" style="background-color:#f2f2f2; height: 500px"></div>
-
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.VisibleForFriends, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <div class="checkbox">
+                @Html.EditorFor(model => model.VisibleForFriends)
+                @Html.ValidationMessageFor(model => model.VisibleForFriends, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div id="myDiagramDiv" style="background-color:#f2f2f2; height: 500px"></div>
+
+</div>
+    <hr />
     <div id="diagram-buttons">
-        <input type="submit" value="Save" id="SaveButton" class="btn btn-success" />
+        <input type="submit" value="Zapisz" id="SaveButton" class="btn btn-success" />
+         <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#myModalDelete">
+            Usuń
+        </button>
+        @Html.HiddenFor(model => model.DiagramData, new { htmlAttributes = new { @class = "form-control", @name = "mySavedModel2"} })
 
-        @Html.EditorFor(model => model.DiagramData, new { htmlAttributes = new { @class = "form-control", @name = "mySavedModel2" } })
+        <textarea id="mySavedModel" name="mySavedModel" class="form-control" style="display:none;">
 
-        <textarea id="mySavedModel" name="mySavedModel" class="form-control">
 
 
                         @if (Model.DiagramData != null)
@@ -120,16 +125,15 @@
     </div> <!--end of diagram buttons-->
 
 }
+<hr />
 @{Html.RenderAction("IndexBoard", "Tag", new { boardId = Model.Id });}
-    <button type="button" data-toggle="modal" data-target="#myModalDelete">
-        Usuń
-    </button>
-<button type="button" data-toggle="modal" data-target="#myModal1">
+
+<button class="btn btn-success" type="button" data-toggle="modal" data-target="#myModal1">
     +
 </button>
-
+<hr />
 <div>
-    @Html.ActionLink("Lista Tablic", "Index")
+    @Html.ActionLink("Lista Tablic", "Index", null, new { @class = "btn btn-primary" })
 </div>
 
 <div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalDelete">

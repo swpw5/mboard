@@ -1,7 +1,7 @@
 ﻿@model mboard.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Zaloguj się za pomocą innej usługi.</h4>
+@*<h4>Zaloguj się za pomocą innej usługi.</h4>
 <hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
@@ -26,3 +26,4 @@
         }
     }
 }
+    *@

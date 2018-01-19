@@ -5,7 +5,8 @@
     ViewBag.Title = "Invitations";
 }
 
-<h2>View</h2>
+<h2>Wysłane</h2>
+<h4>Zaproszenia</h4>
 
 <p>
 </p>
@@ -34,7 +35,7 @@
         {
             @Html.AntiForgeryToken()
             @Html.Hidden("id", item.RelationData.Id)
-            <input type="submit" value="Wycofaj" />
+            <input class="btn btn-danger btn-sm" type="submit" value="Wycofaj" />
     }
         </td>
     </tr>
