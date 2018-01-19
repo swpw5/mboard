@@ -30,13 +30,17 @@ namespace mboard.Controllers
                 try { id = db.ReadNode<Tag>("Title", tag.Title).Id; }
                 catch { };
                 if (string.IsNullOrEmpty(id))
+                {
                     db.CreateNodeWithRelation(new Tag { Title = tag.Title }, tag.TableId, tagRel);
+                    return RedirectToAction("Edit", "Test", new { Id = tag.TableId });
+                }
                 else
                 {
                     tag.Id = id;
                     if (!db.CheckRelationExist<TagRelation>(tag.TableId, tag.Id))
                     {
                         db.CreateRelation(tag.TableId, tag.Id, tagRel);
+                        return RedirectToAction("Edit", "Test", new { Id = tag.TableId });
                     }
                 }
             }

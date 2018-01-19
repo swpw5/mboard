@@ -7,8 +7,8 @@
 
 
 
-@using (Html.BeginForm("Edit","Test", FormMethod.Post))
- {
+@using (Html.BeginForm("Edit", "Test", FormMethod.Post))
+{
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
@@ -24,16 +24,21 @@
                 @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.VisibleForFriends, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.VisibleForFriends)
+                    @Html.ValidationMessageFor(model => model.VisibleForFriends, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
 
         <div id="myDiagramDiv" style="background-color:#f2f2f2; height: 500px"></div>
 
     </div>
-
-
     <div id="diagram-buttons">
-
         <input type="submit" value="Save" id="SaveButton" class="btn btn-success" />
-
 
         @Html.EditorFor(model => model.DiagramData, new { htmlAttributes = new { @class = "form-control", @name = "mySavedModel2" } })
 
@@ -114,14 +119,31 @@
 
     </div> <!--end of diagram buttons-->
 
- }
+}
 @{Html.RenderAction("IndexBoard", "Tag", new { boardId = Model.Id });}
-
-    <button type="button" data-toggle="modal" data-target="#myModal1">
-        +
+    <button type="button" data-toggle="modal" data-target="#myModalDelete">
+        Usuń
     </button>
+<button type="button" data-toggle="modal" data-target="#myModal1">
+    +
+</button>
+
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Lista Tablic", "Index")
+</div>
+
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalDelete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalDelete">Usuń Tablicę</h4>
+            </div>
+            <div class="modal-body">
+                @{Html.RenderAction("Delete", "Test", new { id = Model.Id });}
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1">
@@ -132,7 +154,7 @@
                 <h4 class="modal-title" id="myModalLabel1">Dodaj Tag</h4>
             </div>
             <div class="modal-body">
-                @{Html.RenderAction("Create", "Tag", new {TableId = Model.Id });}
+                @{Html.RenderAction("Create", "Tag", new { TableId = Model.Id });}
             </div>
         </div>
     </div>

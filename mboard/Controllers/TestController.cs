@@ -78,7 +78,7 @@ namespace mboard.Controllers
         // POST: Test/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title")] Board board)
+        public ActionResult Create([Bind(Include = "Title, VisibleForFriends")] Board board)
         {
             if (ModelState.IsValid)
             {
@@ -88,13 +88,9 @@ namespace mboard.Controllers
                 //b.Title = board.Title;
                 //Debug.WriteLine(b.name);
                 string userId = User.Identity.GetUserId();
-                UserBoardRelation rel = new UserBoardRelation()
-                {
-                    Description = "testwidok"
-                };
-                NeoDbContext ctx = new NeoDbContext();
+                UserBoardRelation rel = new UserBoardRelation();
                 // ctx.CreateNode(user);
-                ctx.CreateNodeWithRelation(board, userId, rel);
+                db.CreateNodeWithRelation(board, userId, rel);
                 //board.DiagramData =
                 //db.CreateNode(board);
                 return RedirectToAction("Index");
@@ -162,7 +158,7 @@ namespace mboard.Controllers
                 {
                     return HttpNotFound();
                 }
-                return View(board);
+                return PartialView(board);
             }
             else { return HttpNotFound(); }
         }

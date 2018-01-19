@@ -20,7 +20,7 @@ namespace mboard.Models
         //public int Height { get; set; }
         //public int Width { get; set; }
         [DisplayName("Widoczne dla przyjaciół:")]
-        public bool VisibleForFriends { get; set; } = true;
+        public bool VisibleForFriends { get; set; }
             public string DiagramData { get; set; }
                                            //public DateTime Last_mod { get; set; }
                                            //public DateTime Created { get; set; }

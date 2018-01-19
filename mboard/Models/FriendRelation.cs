@@ -11,7 +11,7 @@ namespace mboard.Models
     {
         [Key]
         public string Id { get; set; } = Guid.NewGuid().ToString();
-        [DisplayName("Data wysłania:")]
+        [DisplayName("Od:")]
         [DisplayFormat(DataFormatString = "{0:dd.MM.yyyy HH:mm}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; } = DateTime.Now;
         public FriendsTypeRel FriendType { get; set; } = FriendsTypeRel.Invited;

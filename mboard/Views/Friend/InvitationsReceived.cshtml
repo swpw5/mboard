@@ -13,6 +13,8 @@
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.NodeData.Email)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.RelationData.Created)
         </th>
 
@@ -23,24 +25,26 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.NodeData.Email)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.RelationData.Created)
         </td>
         <td>
         <td>
             @using (Html.BeginForm("RejectInv", "Friend"))
-    {
-        @Html.AntiForgeryToken()
-        @Html.Hidden("id", item.RelationData.Id)
-        <input type="submit" value="Odrzuć" />
-}
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("id", item.RelationData.Id)
+            <input type="submit" value="Odrzuć" />
+    }
         </td>
         <td>
             @using (Html.BeginForm("AcceptInv", "Friend"))
-    {
-        @Html.AntiForgeryToken()
-        @Html.Hidden("id", item.RelationData.Id)
-        <input type="submit" value="Zaakceptuj" />
-}
+        {
+            @Html.AntiForgeryToken()
+            @Html.Hidden("id", item.RelationData.Id)
+            <input type="submit" value="Zaakceptuj" />
+    }
         </td>
     </tr>
 }

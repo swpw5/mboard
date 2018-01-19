@@ -38,10 +38,10 @@ namespace mboard.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SentMessage(Message message)
+        public ActionResult SendMessage(Message message)
         {
             string userId = db.ReadNode<User>("Email", message.UserTo).Id;
-            if (db.CheckRelationExist<MessageRelations>(userId, User.Identity.GetUserId()))
+            if (db.CheckRelationExist<FriendRelation>(userId, User.Identity.GetUserId()))
             {
                 message.UserFrom = User.Identity.GetUserName();
                 MessageRelations send = new MessageRelations()
@@ -60,7 +60,7 @@ namespace mboard.Controllers
                 };
                 db.CreateNodeWithRelation(message, User.Identity.GetUserId(), send);
                 db.CreateRelation(rel);
-                return RedirectToAction("MessagesSended");
+                return RedirectToAction("MessagesSent");
             }
             else
                 return HttpNotFound();
