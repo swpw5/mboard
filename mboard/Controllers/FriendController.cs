@@ -41,7 +41,7 @@ namespace mboard.Controllers
 
         public ActionResult InvitationsSend()
         {
-            var users = db.ReadRelatedNodesWithRelationsTo<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", FriendsTypeRel.Invited.ToString());
+            var users = db.ReadRelatedNodesWithRelationsTo<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", Convert.ToString(Enum.GetName(typeof(FriendsTypeRel), FriendsTypeRel.Invited)));
             return View(users.ToList());
         }
 
@@ -54,7 +54,7 @@ namespace mboard.Controllers
 
         public ActionResult InvitationsReceived()
         {
-            var users = db.ReadRelatedNodesWithRelationsFrom<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", FriendsTypeRel.Invited.ToString());
+            var users = db.ReadRelatedNodesWithRelationsFrom<User, FriendRelation>(User.Identity.GetUserId(), "FriendType", Convert.ToString(Enum.GetName(typeof(FriendsTypeRel), FriendsTypeRel.Invited)));
             return View(users.ToList());
         }
 

@@ -53,7 +53,7 @@ namespace mboard.Controllers
         }
 
         [HttpPost]
-        public ActionResult Details([Bind(Include = "Id,Title,name,DiagramData")] Board board)
+        public ActionResult Details([Bind(Include = "Id,Title,name,DiagramData,BoardModel")] Board board)
         {
             if (board == null)
             {
@@ -73,7 +73,7 @@ namespace mboard.Controllers
 
         // POST: Test/Create
         [HttpPost]
-        public ActionResult Create([Bind(Include = "Title")] Board board)
+        public ActionResult Create([Bind(Include = "Title, BoardModel")] Board board)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,8 @@ namespace mboard.Controllers
                 //Debug.WriteLine(b.name);
                 string userId = User.Identity.GetUserId();
                 UserBoardRelation rel = new UserBoardRelation();
-                rel.Description = "testwidok";
+                rel.Description = "owned by";
+
 
                 NeoDbContext ctx = new NeoDbContext();
                 // ctx.CreateNode(user);
@@ -122,8 +123,10 @@ namespace mboard.Controllers
             {
                 db.UpdateAllPropNode<Board>(board.Id, board);
                 //var d = board.DiagramData;
+
                 if (board.DiagramData != null)
                 {
+                    //oczysc jsona z danymi diagramu 
                     string replacement = Regex.Replace(board.DiagramData, @"\t|\n|\r", "");
                     string diag = replacement.Replace("'", "\"");
 

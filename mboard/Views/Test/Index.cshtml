@@ -9,80 +9,63 @@
 <hr />
 @Html.ActionLink("Nowa Tablica", "Create", "Test")
 <hr />
-<p>
 
-    @*@ViewBag.Message;*@
-    @* @Html.ActionLink("Create New", "Create")*@
-</p>
+    <input class="form-control" id="searchInput" placeholder="Szukaj..." />
 
-<div class="board-container">
-    @foreach (var item in Model)
-    {
-        <div class="btn btn-default board-thumb">
-            @Html.DisplayFor(modelItem => item.Title)
-           
-            @Html.ActionLink("Edit", "Edit", new { id = item.Id})
-            <p>@item.Id</p>
-        </div>
-    }
+<br />
+<div id="board-container">
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+
+            <div class="col-xs-6 col-md-3">
+                <div class="thumbnail">
+                    <img src="" alt="" />
+                    <div class="caption">
+                        <h3>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </h3>
+                      
+                    </div>
+
+                    <p>...</p>
+                    <p>@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })</p>
+
+
+                </div>
+            </div>
+
+        }
+
+    </div>
 </div>
 
 
-@*<table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Color)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Height)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Width)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Last_mod)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Created)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.List_position)
-            </th>
-            <th></th>
-        </tr>
+<script>
+   
+    document.getElementById("searchInput").addEventListener('keyup', function () {
 
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Height)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Width)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Last_mod)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.List_position)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-            </td>
-        </tr>
-    }
+        //split the current value of searchInput
+        var data = this.value.split(" ");
+        //create a jquery object of the rows
+        //var jo = document.getElementById("#board-container").find("div thumbnail");
+        var jo = document.querySelectorAll(".caption");
+        console.log(jo); 
+        if (jo.value == data) {
+            console.log(jo);
+        }
 
-    </table>*@
+    
+    })
+
+
+    //function $(id) {
+    //    var elem;
+    //    elem = document.getElementById(id)
+    //    return elem;
+    //};
+
+</script>
+
+

@@ -165,6 +165,8 @@ namespace mboard.Models
             IEnumerable<RelationWithNode<NodeResultType, RelationType>> result = query.AsEnumerable();
             return result;
         }
+
+        //jakis problem przy klikncieciu zaproszenia otrzymane
         public IEnumerable<RelationWithNode<NodeResultType, RelationType>> ReadRelatedNodesWithRelationsFrom<NodeResultType, RelationType>(string nodeId, string attribute, string attrValue)
         {
             gc.Connect();

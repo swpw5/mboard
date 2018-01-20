@@ -152,6 +152,15 @@ namespace mboard.Tests.Models
         }
 
 
+        [TestMethod]
+        public void EnumTest()
+        {
+
+            Debug.WriteLine(Enum.GetName(typeof(FriendsTypeRel), FriendsTypeRel.Invited));
+
+        }
+
+
     }
 
     public class UserTest : INodeModel
