@@ -19,12 +19,14 @@
     <p>
         Nazwa: @Html.TextBox("SearchString")
         <input class="btn btn-primary btn-sm" type="submit" value="Szukaj" />
+
+        <input class="form-control" id="searchInput" placeholder="Szukaj..." />
     </p>
     }
     @*@ViewBag.Message;*@
     @* @Html.ActionLink("Create New", "Create")*@
 
-    <div class="board-container">
+    @*<div class="board-container">
         @foreach (var item in Model)
         {
             <div class="btn btn-default board-thumb">
@@ -33,68 +35,59 @@
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id })
             </div>
         }
+    </div>*@
+
+    <div id="board-container">
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+
+            <div class="col-xs-6 col-md-3 thumb-container">
+                <div class="thumbnail">
+                    <img src="" alt="" />
+                    <div class="caption">
+                        <h3>
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </h3>
+
+                    </div>
+
+                    <p>...</p>
+                    <p>@Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })</p>
+
+
+                </div>
+            </div>
+
+        }
+
     </div>
+</div>
+
+    
+
     <hr />
     <p>
         @{Html.RenderAction("Index", "Tag");}
     </p>
 
+<script src="~/Scripts/jquery-3.2.1.js"></script> @*20180120 trzeba zaciagnac z bundla*@
 
-    @*<table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Color)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Height)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Width)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Last_mod)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Created)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.List_position)
-                </th>
-                <th></th>
-            </tr>
+ <script>
+     $(document).ready(function () {
 
-        @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Color)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Height)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Width)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Last_mod)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Created)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.List_position)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                </td>
-            </tr>
-        }
+         $('#searchInput').on('keyup', function () {
+             var searchTerm = $(this).val().toLowerCase();
+             $('.thumb-container').each(function () {
+                 var lineStr = $(this).text().toLowerCase();
+                 if (lineStr.indexOf(searchTerm) === -1) {
+                     $(this).hide();
+                 } else {
+                     $(this).show();
+                 }
+             });
+         });
 
-        </table>*@
+     });
+ </script>

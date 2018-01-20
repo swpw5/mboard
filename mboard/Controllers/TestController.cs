@@ -78,7 +78,7 @@ namespace mboard.Controllers
         // POST: Test/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title, VisibleForFriends")] Board board)
+        public ActionResult Create([Bind(Include = "Title, VisibleForFriends,Id,DiagramData,BoardModel")] Board board)
         {
             if (ModelState.IsValid)
             {

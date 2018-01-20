@@ -12,5 +12,6 @@ namespace mboard.Models
     {
         [Display(Name = "E-mail:")]
         override public string Email { get; set; }
+        public string name { get { return base.Email; } } //prop pisane mala litera aby email widoczny byl wewnatrz wezla 
     }
 }
