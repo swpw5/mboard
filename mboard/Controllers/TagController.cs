@@ -42,6 +42,8 @@ namespace mboard.Controllers
                         db.CreateRelation(tag.TableId, tag.Id, tagRel);
                         return RedirectToAction("Edit", "Test", new { Id = tag.TableId });
                     }
+                    else
+                    { return PartialView("Have"); }
                 }
             }
             return HttpNotFound();

@@ -17,10 +17,10 @@
     @using (Html.BeginForm("Index", "Test"))
     {
     <p>
-        Nazwa: @Html.TextBox("SearchString")
-        <input class="btn btn-primary btn-sm" type="submit" value="Szukaj" />
-
+        @Html.Hidden("SearchString")
         <input class="form-control" id="searchInput" placeholder="Szukaj..." />
+        <hr />
+        <input class="btn btn-primary btn-sm" type="submit" value="Resetuj tagi" />
     </p>
     }
     @*@ViewBag.Message;*@

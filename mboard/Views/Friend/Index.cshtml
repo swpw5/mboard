@@ -10,7 +10,7 @@
 @using (Html.BeginForm("Index", "Friend"))
 {
     <p>
-        Nazwa: @Html.TextBox("SearchString")
+        @Html.TextBox("SearchString", null, new { @placeholder = "Szukaj...", @class="control"})
         <input class="btn btn-primary btn-sm" type="submit" value="Szukaj" />
     </p>
 }

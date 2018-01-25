@@ -30,7 +30,7 @@
                 @Html.DisplayFor(modelItem => item.NodeData.VisibleForFriends)
             </td>
             <td>
-                @Html.ActionLink("Obejrzyj", "Details", "Test",new { Id = item.NodeData.Id, UserId = item.RelationData.Id },null)
+                @Html.ActionLink("Obejrzyj", "Details", "Test",new { Id = item.NodeData.Id, UserId = item.RelationData.Id }, new { @class = "btn btn-success btn-sm" })
             </td>
         </tr>
     }
